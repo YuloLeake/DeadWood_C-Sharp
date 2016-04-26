@@ -5,6 +5,7 @@
 
 using Deadwood.Model;
 using System;
+using System.Collections.Generic;
 
 namespace Deadwood
 {
@@ -36,7 +37,7 @@ namespace Deadwood
             }
             Console.WriteLine(playerCount + " palyers are starting Deadwood");
 
-            Deadwood game = new DummyDeadwood();
+            Deadwood game = new YuloDeadwood(playerCount);
             string input;
             do
             {
@@ -95,9 +96,7 @@ namespace Deadwood
                     break;
 
                 case "move":
-                    Console.WriteLine("Input room name");
-                    string room = Console.ReadLine().ToLower().Trim();
-                    game.Move(room);
+                    game.Move();
                     break;
                 case "work":
                     Console.WriteLine("Input role name");
@@ -123,7 +122,7 @@ namespace Deadwood
         public abstract bool IsGameOver();
         public abstract void Who();
         public abstract void Where();
-        public abstract void Move(string to);
+        public abstract void Move();
         public abstract void Work(string part);
         public abstract void Rehearse();
         public abstract void Act();
@@ -175,9 +174,9 @@ namespace Deadwood
             Console.WriteLine("List roles in all room");
         }
 
-        public override void Move(string to)
+        public override void Move()
         {
-            Console.WriteLine("Move to the \"" + to + "\"");
+            Console.WriteLine("Move to the \"" + "<room>" + "\"");
         }
 
         public override void PrintAdjacents()
@@ -256,9 +255,18 @@ namespace Deadwood
             throw new NotImplementedException();
         }
 
-        public override void Move(string to)
+        public override void Move()
         {
-            throw new NotImplementedException();
+            List<string> list = b.GetAdjacentRooms();
+            Console.WriteLine("Move player to:");
+            for(int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine("\t{0}). {1}", i + 1, list[i]);
+            }
+            Console.Write("\t>");
+            string input = Console.ReadLine();
+            // TODO: allow numerical input
+            b.Move(input);
         }
 
         public override void PrintAdjacents()
