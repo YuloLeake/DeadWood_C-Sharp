@@ -3,6 +3,7 @@
  *  Copyright (c) Yulo Leake 2016
  */
 
+using Deadwood.Model;
 using System;
 
 namespace Deadwood
@@ -218,4 +219,81 @@ namespace Deadwood
         }
     }
 
+    class YuloDeadwood : Deadwood
+    {
+        private Board b;
+        public YuloDeadwood(int playerCount)
+        {
+            b = Board.mInstance;
+            Random rng = new Random();
+            b.SetUpBoard(playerCount, rng); 
+        }
+
+
+        private bool isGameOver = false;
+        public override bool IsGameOver()
+        {
+            return isGameOver;
+        }
+
+        public override void Act()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void EndGame()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void List()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ListAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Move(string to)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void PrintAdjacents()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Rehearse()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void UpgradeCredits(int level)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void UpgradeDollars(int level)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Where()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Who()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Work(string part)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
