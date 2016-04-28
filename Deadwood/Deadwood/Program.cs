@@ -67,19 +67,7 @@ namespace Deadwood
                     game.Rehearse();
                     break;
                 case "end":
-                    Console.WriteLine("Are you sure you want to quit? y/n");
-                    string input = Console.ReadLine().ToLower().Trim();
-                    switch (input)
-                    {
-                        case "y":
-                            game.EndGame();
-                            break;
-                        case "n":
-                            break;
-                        default:
-                            Console.WriteLine("Input unknown, not ending game.");
-                            break;
-                    }
+                    game.EndGame();
                     break;
 
                 case "list":
@@ -112,9 +100,7 @@ namespace Deadwood
                     break;
 
             }
-
         }
-
     }
 
     abstract class Deadwood
@@ -228,7 +214,6 @@ namespace Deadwood
             b.SetUpBoard(playerCount, rng); 
         }
 
-
         private bool isGameOver = false;
         public override bool IsGameOver()
         {
@@ -242,7 +227,19 @@ namespace Deadwood
 
         public override void EndGame()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Are you sure you want to quit? y/n");
+            string input = Console.ReadLine().ToLower().Trim();
+            switch (input)
+            {
+                case "y":
+                    Environment.Exit(0);
+                    break;
+                case "n":
+                    break;
+                default:
+                    Console.WriteLine("Input unknown, not ending game.");
+                    break;
+            }
         }
 
         public override void List()
