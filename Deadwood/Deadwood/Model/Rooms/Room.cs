@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Deadwood.Model.Room
+namespace Deadwood.Model.Rooms
 {
     abstract class Room
     {

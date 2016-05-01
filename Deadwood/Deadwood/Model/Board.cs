@@ -5,9 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Deadwood.Model
 {
@@ -33,7 +30,11 @@ namespace Deadwood.Model
         }
 
         // Setting up board and its fields
+
+        private List<Player> playerList;
+        public Player currentPlayer { get; private set; }
         public int playerCount { get; private set; }
+
         private Random rng;
 
         Dictionary<string, int> roomToIndex;
@@ -54,6 +55,7 @@ namespace Deadwood.Model
 
             SetUpRooms();
             SetUpAdjMat();
+            SetUpPlayers(playerCount);
 
             playerMocLoc = roomToIndex["Trailers"];
         }
@@ -187,6 +189,22 @@ namespace Deadwood.Model
             }
         }
 
+        private void SetUpPlayers(int count)
+        {
+            this.playerList = new List<Player>(count);
+            string[] colors = {"blue", "cyan", "green", "orange", "pink", "red", "violet", "yellow"}; // add custom names?
+            int startingCred = 0;
+            int startingRank = 0;
+
+            // TODO: do stuff based on the number of players
+
+            Player proto = Player.MakePrototype(startingCred, startingRank);
+            for (int i = 0; i < count; i++)
+            {
+                playerList.Add(proto.Clone(colors[i]));
+            }
+        }
+
         // Return list of roomnames that is adjacent to current player's room
         public List<string> GetAdjacentRooms()
         {
@@ -243,5 +261,6 @@ namespace Deadwood.Model
                 return;
             }
         }
+
     }
 }

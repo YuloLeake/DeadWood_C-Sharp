@@ -67,7 +67,7 @@ namespace Deadwood
                     game.Rehearse();
                     break;
                 case "end":
-                    game.EndGame();
+                    game.End();
                     break;
 
                 case "list":
@@ -77,10 +77,7 @@ namespace Deadwood
                     game.ListAll();
                     break;
                 case "adj":
-                    game.PrintAdjacents();
-                    break;
-                case "help":
-                    game.PrintHelp();
+                    game.PrintAdjacentsRooms();
                     break;
 
                 case "move":
@@ -93,6 +90,13 @@ namespace Deadwood
                     break;
                 case "upgrade":
                     Console.WriteLine("");
+                    break;
+
+                case "help":
+                    game.PrintHelp();
+                    break;
+                case "quit":
+                    game.QuitGame();
                     break;
 
                 default:
@@ -112,17 +116,56 @@ namespace Deadwood
         public abstract void Work(string part);
         public abstract void Rehearse();
         public abstract void Act();
-        public abstract void EndGame();
+        public abstract void End();
         public abstract void List();
         public abstract void ListAll();
-        public abstract void PrintAdjacents();
+        public abstract void PrintAdjacentsRooms();
         public abstract void UpgradeDollars(int level);
         public abstract void UpgradeCredits(int level);
+
+        public void QuitGame()
+        {
+            Console.WriteLine("Are you sure you want to quit? y/n");
+            string input = Console.ReadLine().ToLower().Trim();
+            switch (input)
+            {
+                case "y":
+                    Environment.Exit(0);
+                    break;
+                case "n":
+                    break;
+                default:
+                    Console.WriteLine("Input unknown, not ending game.");
+                    break;
+            }
+        }
 
         public void PrintHelp()
         {
             Console.WriteLine("List of available commands:");
-            Console.WriteLine("\t<cmd> | <What it does>");
+            Console.WriteLine("\twho           | Display information about current player.");
+            Console.WriteLine("\twhere         | Display information about current player's whereabout.");
+
+            Console.WriteLine("\tmove          | Prompt the game to move.");
+            Console.WriteLine("\tmove room     | Move current player to given room (if valid).");
+
+            Console.WriteLine("\twork          | Prompt the game to work a role.");
+            Console.WriteLine("\twork role     | Take up a given role in current room.");
+
+            Console.WriteLine("\tupgrade       | Prompt the game to upgrade current player.");
+            Console.WriteLine("\tupgrade $ lvl | Upgrade current player using money.");
+            Console.WriteLine("\tupgrade c lvl | Upgrade current player using credit points.");
+
+            Console.WriteLine("\tact           | Act current role.");
+            Console.WriteLine("\trehearse      | Rehearse current role.");
+            Console.WriteLine("\tend           | End this turn.");
+
+            Console.WriteLine("\tadj           | Display a list of adjacent rooms.");
+            Console.WriteLine("\tlist          | Display a list of available roles in current room.");
+            Console.WriteLine("\tlistall       | Display a list of ALL available roles on the board.");
+
+            Console.WriteLine("\thelp          | Display available commands.");
+            Console.WriteLine("\tquit          | Quit the game.");
         }
     }
 
@@ -142,7 +185,7 @@ namespace Deadwood
             Console.WriteLine("                                        ---Rodney Dangerfield");
         }
 
-        public override void EndGame()
+        public override void End()
         {
             Console.WriteLine("But all the magic I have known");
             Console.WriteLine("I've had to make myself.");
@@ -165,7 +208,7 @@ namespace Deadwood
             Console.WriteLine("Move to the \"" + "<room>" + "\"");
         }
 
-        public override void PrintAdjacents()
+        public override void PrintAdjacentsRooms()
         {
             Console.WriteLine("List adjacent Rooms");
         }
@@ -222,34 +265,22 @@ namespace Deadwood
 
         public override void Act()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("<Implementation needed to Act the role>");
         }
 
-        public override void EndGame()
+        public override void End()
         {
-            Console.WriteLine("Are you sure you want to quit? y/n");
-            string input = Console.ReadLine().ToLower().Trim();
-            switch (input)
-            {
-                case "y":
-                    Environment.Exit(0);
-                    break;
-                case "n":
-                    break;
-                default:
-                    Console.WriteLine("Input unknown, not ending game.");
-                    break;
-            }
+            Console.WriteLine("<Implementation needed to End current turn>");
         }
 
         public override void List()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("<Implementation needed to List roles>");
         }
 
         public override void ListAll()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("<Implementation needed to List all available roles>");
         }
 
         public override void Move()
@@ -262,18 +293,18 @@ namespace Deadwood
             }
             Console.Write("\t>");
             string input = Console.ReadLine();
-            // TODO: allow numerical input
+            // TODO: allow numerical input?
             b.Move(input);
         }
 
-        public override void PrintAdjacents()
+        public override void PrintAdjacentsRooms()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("<Implementation needed to Print Adjacent rooms>");
         }
 
         public override void Rehearse()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("<Implementation needed to Rehearse role>");
         }
 
         public override void UpgradeCredits(int level)
@@ -288,17 +319,17 @@ namespace Deadwood
 
         public override void Where()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("<Implementation needed to Print which room the user is at>");
         }
 
         public override void Who()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("<Implementation needed to Print who the current player is>");
         }
 
         public override void Work(string part)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("<Implementation needed to Take a role>");
         }
     }
 }
