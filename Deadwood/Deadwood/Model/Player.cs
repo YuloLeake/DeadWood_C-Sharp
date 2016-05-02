@@ -1,8 +1,6 @@
 ﻿/*
- *  Main Deadwood driver source code
+ *  Player class that keeps information about a player.
  *  Copyright (c) Yulo Leake 2016
- *
- *  A placeholder class for Player class.
  */
 
 using System;

@@ -1,8 +1,6 @@
 ﻿/*
- *  Main Deadwood driver source code
+ *  Abstract Class that various Rooms in the game will inherit. 
  *  Copyright (c) Yulo Leake 2016
- *
- *  This is an abstract Class that various Rooms in the game will inherit. 
  */
 
 using System;
@@ -23,7 +21,7 @@ namespace Deadwood.Model.Rooms
         public abstract void rehearse(Role r);
         public abstract void upgrade(Player p, int cr, int level);
         public abstract Role takeRole(String roleName);
-        public abstract List<Role> getExtraRoles();
+        public abstract List<Role> getAllRoles();
         public abstract List<Role> getAllAvailableRoles();
     }
 }

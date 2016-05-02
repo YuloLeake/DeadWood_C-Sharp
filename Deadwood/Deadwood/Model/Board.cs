@@ -1,5 +1,5 @@
 ﻿/*
- *  Main Deadwood driver source code
+ *  Board class that is in charge of keeping game and player informations.
  *  Copyright (c) Yulo Leake 2016
  */
 
@@ -11,12 +11,11 @@ namespace Deadwood.Model
     class Board
     {
         // Singleton Construction
-        private static Board instance;
-
         private Board()
         {
         }
 
+        private static Board instance;
         public static Board mInstance
         {
             get
@@ -192,12 +191,13 @@ namespace Deadwood.Model
         private void SetUpPlayers(int count)
         {
             this.playerList = new List<Player>(count);
-            string[] colors = {"blue", "cyan", "green", "orange", "pink", "red", "violet", "yellow"}; // add custom names?
+            string[] colors = {"blue", "cyan", "green", "orange", "pink", "red", "violet", "yellow"}; // used as name for players
             int startingCred = 0;
             int startingRank = 0;
 
             // TODO: do stuff based on the number of players
 
+            // Create prototype of Player with same starting credit and rank, clone prototype with different names
             Player proto = Player.MakePrototype(startingCred, startingRank);
             for (int i = 0; i < count; i++)
             {

@@ -1,8 +1,6 @@
 ﻿/*
- *  Main Deadwood driver source code
+ *  Role class that keeps information about the role.
  *  Copyright (c) Yulo Leake 2016
- *
- *  A placeholder class for Role class.
  */
 
 using System;

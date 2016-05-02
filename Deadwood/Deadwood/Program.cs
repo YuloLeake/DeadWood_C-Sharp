@@ -162,7 +162,7 @@ namespace Deadwood
 
             Console.WriteLine("\tadj           | Display a list of adjacent rooms.");
             Console.WriteLine("\tlist          | Display a list of available roles in current room.");
-            Console.WriteLine("\tlistall       | Display a list of ALL available roles on the board.");
+            Console.WriteLine("\tlistall       | Display a list of all roles in current room.");
 
             Console.WriteLine("\thelp          | Display available commands.");
             Console.WriteLine("\tquit          | Quit the game.");
