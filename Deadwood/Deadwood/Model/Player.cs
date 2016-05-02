@@ -46,5 +46,30 @@ namespace Deadwood.Model
             return new Player(name, this.credit, this.rank);
         }
 
+        // Public methods
+        public void Act()
+        {
+
+        }
+
+        public void Rehearse()
+        {
+
+        }
+
+        public void Move(string dst)
+        {
+
+        }
+
+        public void TakeRole(string role)
+        {
+
+        }
+
+        public void Upgrade()
+        {
+
+        }
     }
 }
