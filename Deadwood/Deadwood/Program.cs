@@ -23,7 +23,7 @@ namespace Deadwood
             int playerCount = 0;
             try
             {
-                playerCount = Int32.Parse(args[0]);
+                playerCount = int.Parse(args[0]);
             }
             catch (System.FormatException e)
             {
@@ -42,8 +42,6 @@ namespace Deadwood
             do
             {
                 input = Console.ReadLine();
-                Console.WriteLine("User input = " + input);
-
                 processUserInput(game, input.ToLower());
             }
             while (input != null && !game.IsGameOver());
@@ -291,10 +289,23 @@ namespace Deadwood
             {
                 Console.WriteLine("\t{0}). {1}", i + 1, list[i]);
             }
-            Console.Write("\t>");
-            string input = Console.ReadLine();
-            // TODO: allow numerical input?
-            b.Move(input);
+            Console.Write("\t> ");
+            string roomname = Console.ReadLine();
+
+            // see if an input is numerical
+            int num = 0;
+            bool isNumeric = int.TryParse(roomname, out num);
+            if (isNumeric)
+            {
+                // numerical input, use position in list
+                if(num < 1 || num > list.Count)
+                {
+                    Console.WriteLine("Error: Numeric input out of index (make sure it's between 1 and {0})", list.Count);
+                    return;
+                }
+                roomname = list[num - 1];
+            }
+            b.Move(roomname);
         }
 
         public override void PrintAdjacentsRooms()

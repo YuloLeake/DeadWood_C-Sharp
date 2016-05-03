@@ -301,7 +301,6 @@ namespace Deadwood.Model
             return roomNameToRoomDict[roomname];
         }
 
-
         // Player moves
         public void Move(string dst)
         {
