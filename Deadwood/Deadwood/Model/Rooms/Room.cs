@@ -10,7 +10,7 @@ namespace Deadwood.Model.Rooms
 {
     abstract class Room
     {
-        protected readonly string name;
+        public readonly string name;
 
         public Room(String name)
         {
@@ -23,5 +23,8 @@ namespace Deadwood.Model.Rooms
         public abstract Role takeRole(String roleName);
         public abstract List<Role> getAllRoles();
         public abstract List<Role> getAllAvailableRoles();
+        
+        // Event triggered when a player moves into a room
+        public virtual void MoveInto() { }
     }
 }

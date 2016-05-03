@@ -3,6 +3,7 @@
  *  Copyright (c) Yulo Leake 2016
  */
 
+using Deadwood.Model.Exceptions;
 using Deadwood.Model.Rooms;
 using System;
 using System.Collections.Generic;
@@ -37,13 +38,10 @@ namespace Deadwood.Model
         private Random rng;
 
         // Room fields
-        Dictionary<string, int> roomToIndexDict;
-        Dictionary<string, Room> roomNameToRoomDict;
+        private Dictionary<string, int> roomToIndexDict;
+        private Dictionary<string, Room> roomNameToRoomDict;
         string[] roomnames;
         bool[,] roomAdjMat;
-
-        // TODO: replace this with current player
-        int playerMocLoc = 0;   // just a mock to make sure movement is working correct
 
         public void SetUpBoard(int playerCount, Random rng)
         {
@@ -58,7 +56,7 @@ namespace Deadwood.Model
             SetUpAdjMat();
             SetUpPlayers(playerCount);
 
-            playerMocLoc = roomToIndexDict["Trailers"];
+            StartOfDay();
         }
 
         private void SetUpRooms()
@@ -235,13 +233,21 @@ namespace Deadwood.Model
             {
                 playerList.Add(proto.Clone(colors[i]));
             }
+            currentPlayer = playerList[0];
         }
+
+        private void StartOfDay()
+        {
+
+            Player.BrandNewDay(playerList);
+
+        }
+
 
         // Return list of roomnames that is adjacent to current player's room
         public List<string> GetAdjacentRooms()
         {
-            // TODO: make sure to remove mock location and change to current player
-            string roomname = roomnames[playerMocLoc];
+            string roomname = currentPlayer.room.name;
             return GetAdjacentRooms(roomname);
         }
 
@@ -268,30 +274,38 @@ namespace Deadwood.Model
             return list;
         }
 
+        // Return true if src and dec are adjacent, false otherwise
+        public bool areRoomsAdjacent(string src, string des)
+        {
+            // Handle for non-existing room cases
+            if(roomToIndexDict.ContainsKey(src) == false)
+            {
+                throw new IllegalBoardRequestException("Error: Requested source room \"" + src + "\" does not exist.");
+            }
+            if(roomToIndexDict.ContainsKey(des) == false)
+            {
+                throw new IllegalBoardRequestException("Error: Requested destination room \"" + des + "\" does not exist.");
+            }
+
+            int srcIdx = roomToIndexDict[src];
+            int desIdx = roomToIndexDict[des];
+            return roomAdjMat[srcIdx, desIdx];
+        }
+
+        public Room getRoom(string roomname)
+        {
+            if(roomNameToRoomDict.ContainsKey(roomname) == false)
+            {
+                throw new IllegalBoardRequestException("Error: Requested room \"" + roomname + "\" does not exist.");
+            }
+            return roomNameToRoomDict[roomname];
+        }
+
+
         // Player moves
         public void Move(string dst)
         {
-            // Check if destination room is valid
-            if (roomToIndexDict.ContainsKey(dst) == false)
-            {
-                Console.Error.WriteLine("Error: room \"{0}\" does not exist", dst);
-                return;
-            }
 
-            // TODO: Actually move player (implemented within player)
-            if (roomAdjMat[playerMocLoc, roomToIndexDict[dst]])
-            {
-                // Destination room is adjacent, move player there
-                playerMocLoc = roomToIndexDict[dst];
-                Console.WriteLine("Moved to \"{0}\"", dst);
-            }
-            else
-            {
-                // Destination room is NOT adjacent, throw error
-                // TODO: actually throw errow?
-                Console.Error.WriteLine("Error: room \"{0}\" is not adjacent to \"dst\".", dst, roomnames[playerMocLoc]);
-                return;
-            }
         }
     }
 }

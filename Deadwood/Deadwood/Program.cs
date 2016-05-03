@@ -319,12 +319,13 @@ namespace Deadwood
 
         public override void Where()
         {
-            Console.WriteLine("<Implementation needed to Print which room the user is at>");
+            Player player = Board.mInstance.currentPlayer;
+            Console.WriteLine("Player \"{0}\" is currently at \"{1}\".", player.name, player.room.name);
         }
 
         public override void Who()
         {
-            Console.WriteLine("<Implementation needed to Print who the current player is>");
+            Console.WriteLine("Current player is \"{0}\".", Board.mInstance.currentPlayer.name);
         }
 
         public override void Work(string part)

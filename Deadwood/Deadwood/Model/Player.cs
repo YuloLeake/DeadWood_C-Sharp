@@ -59,7 +59,17 @@ namespace Deadwood.Model
 
         public void Move(string dst)
         {
-
+            // TODO: put this in Moving State of the Player
+            Board b = Board.mInstance;
+            if(b.areRoomsAdjacent(room.name, dst) == false)
+            {
+                // TODO: raise exception
+                return;
+            }
+            // src and dst rooms are adjacent, move player to dst room
+            Room dstRoom = b.getRoom(dst);
+            this.room = dstRoom;
+            dstRoom.MoveInto();
         }
 
         public void TakeRole(string role)
@@ -71,5 +81,17 @@ namespace Deadwood.Model
         {
 
         }
+           
+        // static methods
+        public static void BrandNewDay(List<Player> players)
+        {
+            foreach(Player p in players)
+            {
+                p.room = Trailers.mInstance;
+                // TODO: free roles
+            }
+
+        }
+
     }
 }
