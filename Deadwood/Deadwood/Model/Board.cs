@@ -245,14 +245,14 @@ namespace Deadwood.Model
 
 
         // Return list of roomnames that is adjacent to current player's room
-        public List<string> GetAdjacentRooms()
+        public List<Room> GetAdjacentRooms()
         {
             string roomname = currentPlayer.room.name;
             return GetAdjacentRooms(roomname);
         }
 
         // Return list of roomnames that is adjacent to given room name
-        public List<string> GetAdjacentRooms(string roomname)
+        public List<Room> GetAdjacentRooms(string roomname)
         {
             // Check if roomname given is a valid roomname
             if (roomToIndexDict.ContainsKey(roomname) == false)
@@ -262,13 +262,13 @@ namespace Deadwood.Model
             }
 
             // Create list and add all adjacent rooms
-            List <string> list = new List<string>();
+            List <Room> list = new List<Room>();
             int i = roomToIndexDict[roomname];
             for(int j = 0; j < roomnames.Length; j++)
             {
                 if(roomAdjMat[i, j])
                 {
-                    list.Add(roomnames[j]);
+                    list.Add(roomNameToRoomDict[roomnames[j]]);
                 }
             }
             return list;

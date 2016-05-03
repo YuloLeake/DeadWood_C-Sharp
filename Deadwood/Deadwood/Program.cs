@@ -4,6 +4,7 @@
  */
 
 using Deadwood.Model;
+using Deadwood.Model.Rooms;
 using System;
 using System.Collections.Generic;
 
@@ -13,6 +14,7 @@ namespace Deadwood
     {
         static void Main(string[] args)
         {
+            // TODO: if a count is not specified in the cmd line, ask the user for number of players
             if(args.Length < 1)
             {
                 Console.Error.WriteLine("Error: Not enough arguments given.\nUsage: Deadwood playerCount");
@@ -100,7 +102,6 @@ namespace Deadwood
                 default:
                     Console.Error.WriteLine("Unknown command \"" + cmd + "\" given.\nType \"help\" to see all available commands");
                     break;
-
             }
         }
     }
@@ -247,12 +248,12 @@ namespace Deadwood
 
     class YuloDeadwood : Deadwood
     {
-        private Board b;
+        private Board board;
         public YuloDeadwood(int playerCount)
         {
-            b = Board.mInstance;
+            board = Board.mInstance;
             Random rng = new Random();
-            b.SetUpBoard(playerCount, rng); 
+            board.SetUpBoard(playerCount, rng); 
         }
 
         private bool isGameOver = false;
@@ -283,11 +284,11 @@ namespace Deadwood
 
         public override void Move()
         {
-            List<string> list = b.GetAdjacentRooms();
+            List<Room> list = board.GetAdjacentRooms();
             Console.WriteLine("Move player to:");
             for(int i = 0; i < list.Count; i++)
             {
-                Console.WriteLine("\t{0}). {1}", i + 1, list[i]);
+                Console.WriteLine("\t{0}). {1}", i + 1, list[i].name);
             }
             Console.Write("\t> ");
             string roomname = Console.ReadLine();
@@ -303,14 +304,20 @@ namespace Deadwood
                     Console.WriteLine("Error: Numeric input out of index (make sure it's between 1 and {0})", list.Count);
                     return;
                 }
-                roomname = list[num - 1];
+                roomname = list[num - 1].name;
             }
-            b.Move(roomname);
+            board.Move(roomname);
         }
 
         public override void PrintAdjacentsRooms()
         {
-            Console.WriteLine("<Implementation needed to Print Adjacent rooms>");
+            string currentRoom = board.currentPlayer.room.name;
+            List<Room> list = board.GetAdjacentRooms();
+            Console.WriteLine("Adjacent rooms to \"{0}\" are:", currentRoom);
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine("\t{0}). {1}", i + 1, list[i].name);
+            }
         }
 
         public override void Rehearse()
@@ -330,13 +337,13 @@ namespace Deadwood
 
         public override void Where()
         {
-            Player player = Board.mInstance.currentPlayer;
+            Player player = board.currentPlayer;
             Console.WriteLine("Player \"{0}\" is currently at \"{1}\".", player.name, player.room.name);
         }
 
         public override void Who()
         {
-            Console.WriteLine("Current player is \"{0}\".", Board.mInstance.currentPlayer.name);
+            Console.WriteLine("Current player is \"{0}\".", board.currentPlayer.name);
         }
 
         public override void Work(string part)
