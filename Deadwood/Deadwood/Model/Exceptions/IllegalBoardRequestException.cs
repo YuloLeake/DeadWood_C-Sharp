@@ -11,9 +11,11 @@ namespace Deadwood.Model.Exceptions
 {
     class IllegalBoardRequestException: Exception
     {
+        public string msg { get; private set; }
         public IllegalBoardRequestException(string msg)
             : base(msg)
         {
+            this.msg = msg;
         }
     }
 }

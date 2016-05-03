@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Deadwood.Model.Rooms;
+using Deadwood.Model.Exceptions;
 
 namespace Deadwood.Model
 {
@@ -63,8 +64,8 @@ namespace Deadwood.Model
             Board b = Board.mInstance;
             if(b.areRoomsAdjacent(room.name, dst) == false)
             {
-                // TODO: raise exception
-                return;
+                throw new IllegalUserActionException(string.Format("Error: \"{0}\" and \"{1}\" are not adjacent.\nYou cannot move to \"{1}\"", 
+                                                                    room.name, dst));
             }
             // src and dst rooms are adjacent, move player to dst room
             Room dstRoom = b.getRoom(dst);

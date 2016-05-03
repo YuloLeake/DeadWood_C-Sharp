@@ -305,7 +305,18 @@ namespace Deadwood.Model
         // Player moves
         public void Move(string dst)
         {
-
+            try
+            {
+                currentPlayer.Move(dst);
+            }
+            catch(IllegalBoardRequestException e)
+            {
+                Console.WriteLine(e.msg);
+            }
+            catch(IllegalUserActionException e)
+            {
+                Console.WriteLine(e.msg);
+            }
         }
     }
 }
