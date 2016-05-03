@@ -14,27 +14,32 @@ namespace Deadwood
     {
         static void Main(string[] args)
         {
-            // TODO: if a count is not specified in the cmd line, ask the user for number of players
-            if(args.Length < 1)
-            {
-                Console.Error.WriteLine("Error: Not enough arguments given.\nUsage: Deadwood playerCount");
-                Environment.Exit(1);
-            }
-
+            Console.WriteLine("Welcome to Deadwood!");
             // Handle player count argument
-            int playerCount = 0;
+            int playerCount  = 0;
+            string userInput = "";
+            if (args.Length < 1)
+            {
+                Console.WriteLine("How many players [2, 8]? ");
+                Console.Write("> ");
+                userInput = Console.ReadLine();
+            }
+            else
+            {
+                userInput = args[0];
+            }
             try
             {
-                playerCount = int.Parse(args[0]);
+                playerCount = int.Parse(userInput);
             }
             catch (System.FormatException e)
             {
-                Console.Error.WriteLine("Error: Argument given was not an integer.\nPlease pass in an integer (2-8)");
+                Console.Error.WriteLine("Error: Argument given was not an integer.\nPlease pass in an integer [2, 8]");
                 Environment.Exit(1);
             }
             if(2 > playerCount || playerCount > 8)
             {
-                Console.Error.WriteLine("Error: Player size has to be in range of [2,8]");
+                Console.Error.WriteLine("Error: Player size has to be in range of [2, 8]");
                 Environment.Exit(1);
             }
             Console.WriteLine(playerCount + " palyers are starting Deadwood");

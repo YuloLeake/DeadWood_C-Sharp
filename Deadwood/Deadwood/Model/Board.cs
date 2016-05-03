@@ -251,7 +251,7 @@ namespace Deadwood.Model
             return GetAdjacentRooms(roomname);
         }
 
-        // Return list of roomnames that is adjacent to given room name
+        // Return list of room that is adjacent to given roomname
         public List<Room> GetAdjacentRooms(string roomname)
         {
             // Check if roomname given is a valid roomname
