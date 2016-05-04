@@ -3,12 +3,6 @@
  *  Copyright (c) Yulo Leake 2016
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Deadwood.Model
 {
     class Role
@@ -20,6 +14,16 @@ namespace Deadwood.Model
         protected int rehearsePoint         // rehearsePoint for this role (maybe put it to Player?)
         { get; private set; }        
         
+        // Constructors
+        public Role(string name, string desc, int rank)
+        {
+            this.name = name;
+            this.desc = desc;
+            this.rank = rank;
+        }
+
+        // Methods
+
         public bool IsTaken()
         {
             return actor != null;

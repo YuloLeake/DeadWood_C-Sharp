@@ -4,6 +4,7 @@
  */
 
 using Deadwood.Model.Exceptions;
+using Deadwood.Model.Factories;
 using Deadwood.Model.Rooms;
 using System;
 using System.Collections.Generic;
@@ -61,12 +62,9 @@ namespace Deadwood.Model
 
         private void SetUpRooms()
         {
-            // TODO: define room names in XML or something
-            roomnames = new string[]{"Trailers", "Casting Office",
-                                     "Train Station", "Jail", "General Store",
-                                     "Ranch", "Secret Hideout",
-                                     "Main Street", "Saloon", 
-                                     "Bank", "Church", "Hotel" };
+            IRoomFactory factory = RawRoomFactory.mInstance;
+            roomnames = factory.CreateRoomKeys();
+
             roomToIndexDict = new Dictionary<string, int>(roomnames.Length);
             for (int i = 0; i < roomnames.Length; i++)
             {
@@ -74,12 +72,12 @@ namespace Deadwood.Model
             }
 
             roomNameToRoomDict = new Dictionary<string, Room>(roomnames.Length);
-            roomNameToRoomDict["Trailers"] = Trailers.mInstance;
-            roomNameToRoomDict["Casting Office"] = Trailers.mInstance;
-            for(int i = 2; i < roomnames.Length; i++)
+            roomNameToRoomDict["Trailers"] = factory.CreateRoom("Trailers");
+            roomNameToRoomDict["Casting Office"] = factory.CreateRoom("Casting Office");
+            for (int i = 2; i < roomnames.Length; i++)
             {
                 // Skips Trailers and Casting Office, make all other Sets
-                roomNameToRoomDict[roomnames[i]] = new Set(roomnames[i]);
+                roomNameToRoomDict[roomnames[i]] = factory.CreateRoom(roomnames[i]);
             }
         }
 

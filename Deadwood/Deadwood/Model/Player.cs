@@ -3,11 +3,7 @@
  *  Copyright (c) Yulo Leake 2016
  */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Deadwood.Model.Rooms;
 using Deadwood.Model.Exceptions;
