@@ -274,7 +274,7 @@ namespace Deadwood
 
         public override void End()
         {
-            Console.WriteLine("<Implementation needed to End current turn>");
+            board.EndTurn();
         }
 
         public override void List()

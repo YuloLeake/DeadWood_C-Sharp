@@ -33,8 +33,9 @@ namespace Deadwood.Model
 
         // Player fields
         private List<Player> playerList;
-        public Player currentPlayer { get; private set; }
         public int playerCount { get; private set; }
+        public Player currentPlayer { get; private set; }
+        private int currentPlayerIdx;
 
         private Random rng;
 
@@ -231,7 +232,8 @@ namespace Deadwood.Model
             {
                 playerList.Add(proto.Clone(colors[i]));
             }
-            currentPlayer = playerList[0];
+            currentPlayerIdx = 0; ;
+            currentPlayer = playerList[currentPlayerIdx];
         }
 
         private void StartOfDay()
@@ -314,6 +316,16 @@ namespace Deadwood.Model
             {
                 Console.WriteLine(e.msg);
             }
+        }
+
+        // Player ends turn, switch to next player
+        public void EndTurn()
+        {
+
+            currentPlayerIdx++;
+            currentPlayerIdx %= playerCount;    // wrap it back
+            currentPlayer = playerList[currentPlayerIdx];
+
         }
     }
 }
