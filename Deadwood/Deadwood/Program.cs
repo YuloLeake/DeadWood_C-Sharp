@@ -295,6 +295,7 @@ namespace Deadwood
             {
                 Console.WriteLine("\t{0}). {1}", i + 1, list[i].name);
             }
+            Console.WriteLine("\t0). Cancel");
             Console.Write("\t> ");
             string roomname = Console.ReadLine();
 
@@ -304,13 +305,24 @@ namespace Deadwood
             if (isNumeric)
             {
                 // numerical input, use position in list
-                if(num < 1 || num > list.Count)
+                if(num == 0)
+                {
+                    // User wishes to cancel out of the move.
+                    return;
+                }
+                else if(num < 0 || num > list.Count)
                 {
                     Console.WriteLine("Error: Numeric input out of index (make sure it's between 1 and {0})", list.Count);
                     return;
                 }
                 roomname = list[num - 1].name;
             }
+            if (roomname.Equals("Cancel"))
+            {
+                // User wishes to cancel out of the move
+                return;
+            }
+
             board.Move(roomname);
         }
 
