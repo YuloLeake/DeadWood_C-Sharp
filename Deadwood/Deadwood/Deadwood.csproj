@@ -47,7 +47,9 @@
     <Compile Include="Model\Exceptions\IllegalBoardRequestException.cs" />
     <Compile Include="Model\Exceptions\IllegalUserActionException.cs" />
     <Compile Include="Model\Exceptions\IllegalRoomActionException.cs" />
+    <Compile Include="Model\Factories\IRoleFactory.cs" />
     <Compile Include="Model\Factories\IRoomFactory.cs" />
+    <Compile Include="Model\Factories\RawRoleFactory.cs" />
     <Compile Include="Model\Factories\RawRoomFactory.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\Role.cs" />
@@ -60,8 +62,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="Resources\boardSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\RoleSchema1.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\board1.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

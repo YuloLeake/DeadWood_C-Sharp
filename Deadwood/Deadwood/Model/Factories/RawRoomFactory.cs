@@ -43,6 +43,7 @@ namespace Deadwood.Model.Factories
 
         public Room CreateRoom(string roomname)
         {
+            // TODO: set up Extra Roles for each Set
             Room room = null;
             switch (roomname)
             {

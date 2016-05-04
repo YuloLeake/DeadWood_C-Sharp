@@ -14,7 +14,7 @@ namespace Deadwood.Model.Factories
 {
     interface IRoomFactory
     {
-        string[] CreateRoomKeys();  // Returns roomnames (key to the dict)
-        Room CreateRoom(string roomname);
+        string[] CreateRoomKeys();          // Returns room names
+        Room CreateRoom(string roomname);   // Constuct room based on given name
     }
 }

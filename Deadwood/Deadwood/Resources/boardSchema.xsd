@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="boardSchema"
+    targetNamespace="http://tempuri.org/boardSchema.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/boardSchema.xsd"
+    xmlns:mstns="http://tempuri.org/boardSchema.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+  <!-- Define Board -->
+  <xs:element name="board">
+    <xs:complexType>
+      <xs:sequence>
+        
+        <!-- Define Set -->
+        <xs:element name="set" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              
+              
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence> 
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
