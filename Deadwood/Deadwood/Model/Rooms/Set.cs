@@ -17,8 +17,9 @@ namespace Deadwood.Model.Rooms
         public List<Role> extraRoleList { get; private set; }
 
         // Constructor
-        public Set(string name) : base(name)
+        public Set(string name, List<Role> extraRoleList) : base(name)
         {
+            this.extraRoleList = extraRoleList;
         }
 
         // Inherited methods

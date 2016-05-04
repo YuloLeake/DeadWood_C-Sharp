@@ -10,6 +10,23 @@ namespace Deadwood.Model.Factories
 {
     class RawRoleFactory : IRoleFactory
     {
+        // Singleton Constructor
+        private static IRoleFactory instance = null;
+        public static IRoleFactory mInstance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new RawRoleFactory();
+                }
+                return instance;
+            }
+        }
+
+        private RawRoleFactory() { }
+
+        // Interface Methods
         public Role CreateExtraRole(string name)
         {
             string desc = null;
