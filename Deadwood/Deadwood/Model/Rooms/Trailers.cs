@@ -31,32 +31,32 @@ namespace Deadwood.Model.Rooms
         }
 
         // Inherited methods
-        public override void act(Role r)
+        public override void Act(Role r)
         {
             throw new IllegalRoomActionException("\"Hey, are you blind? No acting in the Trailers!\"\n(You cannot act in the Trailers)");
         }
 
-        public override void rehearse(Role r)
+        public override void Rehearse(Role r)
         {
             throw new IllegalRoomActionException("\"Take your Shakespeare out of here!\"\n(You cannot rehearse in the Trailers)");
         }
 
-        public override List<Role> getAllAvailableRoles()
+        public override List<Role> GetAllAvailableRoles()
         {
             throw new IllegalRoomActionException("There are no roles in the Trailers.");
         }
 
-        public override List<Role> getAllRoles()
+        public override List<Role> GetAllRoles()
         {
             throw new IllegalRoomActionException("There are no roles in the Trailers.");
         }
 
-        public override Role takeRole(string roleName)
+        public override Role TakeRole(string roleName)
         {
             throw new IllegalRoomActionException("\"Are you looking for somebody?\"\n(You cannot take up a role in the Trailers)");
         }
 
-        public override void upgrade(Player p, int cr, int level)
+        public override void Upgrade(Player p, int cr, int level)
         {
             throw new IllegalRoomActionException("\"The Casting Office is on the other side of the map.\"\n(You can only upgrade in the Casting Office, AKA not in the Trailers)");
         }

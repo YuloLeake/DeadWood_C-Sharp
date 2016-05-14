@@ -17,12 +17,12 @@ namespace Deadwood.Model.Rooms
             this.name = name;
         }
 
-        public abstract void act(Role r);
-        public abstract void rehearse(Role r);
-        public abstract void upgrade(Player p, int cr, int level);
-        public abstract Role takeRole(String roleName);
-        public abstract List<Role> getAllRoles();
-        public abstract List<Role> getAllAvailableRoles();
+        public abstract void Act(Role r);
+        public abstract void Rehearse(Role r);
+        public abstract void Upgrade(Player p, int cr, int level);
+        public abstract Role TakeRole(String roleName);
+        public abstract List<Role> GetAllRoles();
+        public abstract List<Role> GetAllAvailableRoles();
         
         // Event triggered when a player moves into a room
         public virtual void MoveInto() { }

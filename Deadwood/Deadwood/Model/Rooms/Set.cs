@@ -23,19 +23,19 @@ namespace Deadwood.Model.Rooms
         }
 
         // Inherited methods
-        public override void act(Role r)
+        public override void Act(Role r)
         {
             // TODO: implement
             Console.WriteLine("<Implementation of acting needed>");
         }
 
-        public override void rehearse(Role r)
+        public override void Rehearse(Role r)
         {
             // TODO: implement
             Console.WriteLine("<Implementation of rehearsing needed>");
         }
 
-        public override List<Role> getAllAvailableRoles()
+        public override List<Role> GetAllAvailableRoles()
         {
             List<Role> list = new List<Role>();
             // TODO: get starring roles from scene
@@ -50,7 +50,7 @@ namespace Deadwood.Model.Rooms
             return list;
         }
 
-        public override List<Role> getAllRoles()
+        public override List<Role> GetAllRoles()
         {
             List<Role> list = new List<Role>();
             // TODO: get starring roles from scene
@@ -63,7 +63,7 @@ namespace Deadwood.Model.Rooms
             return list;
         }
 
-        public override Role takeRole(string roleName)
+        public override Role TakeRole(string roleName)
         {
             Role role = null;
             // TODO: implement
@@ -71,7 +71,7 @@ namespace Deadwood.Model.Rooms
             return role;
         }
 
-        public override void upgrade(Player p, int cr, int level)
+        public override void Upgrade(Player p, int cr, int level)
         {
             throw new IllegalRoomActionException("\"Hey you! Take your fancy spreadsheet to the Casting Office!\"\n(You can only upgrade in the Casting Office, AKA not here.)");
         }

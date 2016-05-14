@@ -307,7 +307,7 @@ namespace Deadwood.Model
             List<Role> list = null;
             try
             {
-                list = roomNameToRoomDict[roomname].getAllAvailableRoles();
+                list = roomNameToRoomDict[roomname].GetAllAvailableRoles();
             }
             catch (IllegalRoomActionException e)
             {
@@ -333,7 +333,7 @@ namespace Deadwood.Model
             List<Role> list = null;
             try
             {
-                list = roomNameToRoomDict[roomname].getAllRoles();
+                list = roomNameToRoomDict[roomname].GetAllRoles();
             }
             catch (IllegalRoomActionException e)
             {

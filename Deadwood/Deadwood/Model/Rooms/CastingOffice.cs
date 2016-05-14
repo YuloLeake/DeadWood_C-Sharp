@@ -32,32 +32,32 @@ namespace Deadwood.Model.Rooms
 
         // Inherited methods
         // Inherited methods
-        public override void act(Role r)
+        public override void Act(Role r)
         {
             throw new IllegalRoomActionException("\"Shh, please reframe from being dramatic in the Casting Office.\"\n(You cannot act in the Casting Office)");
         }
 
-        public override void rehearse(Role r)
+        public override void Rehearse(Role r)
         {
             throw new IllegalRoomActionException("\"Shh, please be quiet in the Casting Office.\"\n(You cannot rehearse in the Casting Office)");
         }
 
-        public override List<Role> getAllAvailableRoles()
+        public override List<Role> GetAllAvailableRoles()
         {
             throw new IllegalRoomActionException("There are no roles in the Casting Office.");
         }
 
-        public override List<Role> getAllRoles()
+        public override List<Role> GetAllRoles()
         {
             throw new IllegalRoomActionException("There are no roles in the Casting Office.");
         }
 
-        public override Role takeRole(string roleName)
+        public override Role TakeRole(string roleName)
         {
             throw new IllegalRoomActionException("\"I am afraid I cannot let you do that\"\n(You cannot take up a role in the Casting Office)");
         }
 
-        public override void upgrade(Player p, int cr, int level)
+        public override void Upgrade(Player p, int cr, int level)
         {
             // TODO: implement
             Console.WriteLine("<Implement upgrade>");
