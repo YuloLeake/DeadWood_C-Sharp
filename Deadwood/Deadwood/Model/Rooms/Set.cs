@@ -38,16 +38,28 @@ namespace Deadwood.Model.Rooms
         public override List<Role> getAllAvailableRoles()
         {
             List<Role> list = new List<Role>();
-            // TODO: implement
-            Console.WriteLine("<Implementation of getting all available roles needed>");
+            // TODO: get starring roles from scene
+
+            foreach(Role r in extraRoleList)
+            {
+                if (r.IsTaken() == false)
+                {
+                    list.Add(r);
+                }
+            }
             return list;
         }
 
         public override List<Role> getAllRoles()
         {
             List<Role> list = new List<Role>();
-            // TODO: implement
-            Console.WriteLine("<Implementation of getting all roles needed>");
+            // TODO: get starring roles from scene
+
+            foreach (Role r in extraRoleList)
+            {
+                list.Add(r);
+            }
+
             return list;
         }
 

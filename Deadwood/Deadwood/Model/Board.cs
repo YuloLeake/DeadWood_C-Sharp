@@ -292,6 +292,58 @@ namespace Deadwood.Model
             return roomAdjMat[srcIdx, desIdx];
         }
 
+        // Return a list of all available roles in given room
+        public List<Role> GetAvailableRoles(string roomname)
+        {
+            // Check if roomname given is a valid roomname
+            if (roomToIndexDict.ContainsKey(roomname) == false)
+            {
+                // TODO: make a ValidateRoom method or something, since we do this many times.
+                Console.Error.WriteLine("Error: room \"{0}\" does not exist", roomname);
+                // TODO: throw exception
+                return null;
+            }
+
+            List<Role> list = null;
+            try
+            {
+                list = roomNameToRoomDict[roomname].getAllAvailableRoles();
+            }
+            catch (IllegalRoomActionException e)
+            {
+                Console.WriteLine(e.msg);
+                // TODO: handle this better
+                list = new List<Role>();
+            }
+            return list;
+        }
+
+        // Return a list of all roles in given room, regardless of their availability
+        public List<Role> GetAllRoles(string roomname)
+        {
+            // Check if roomname given is a valid roomname
+            if (roomToIndexDict.ContainsKey(roomname) == false)
+            {
+                // TODO: make a ValidateRoom method or something, since we do this many times.
+                Console.Error.WriteLine("Error: room \"{0}\" does not exist", roomname);
+                // TODO: throw exception
+                return null;
+            }
+
+            List<Role> list = null;
+            try
+            {
+                list = roomNameToRoomDict[roomname].getAllRoles();
+            }
+            catch (IllegalRoomActionException e)
+            {
+                Console.WriteLine(e.msg);
+                // TODO: handle this better
+                list = new List<Role>();
+            }
+            return list;
+        }
+
         public Room getRoom(string roomname)
         {
             if(roomNameToRoomDict.ContainsKey(roomname) == false)

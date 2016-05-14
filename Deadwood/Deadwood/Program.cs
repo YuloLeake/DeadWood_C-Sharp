@@ -279,12 +279,24 @@ namespace Deadwood
 
         public override void List()
         {
-            Console.WriteLine("<Implementation needed to List roles>");
+            string roomname = board.currentPlayer.room.name;
+            List<Role> list = board.GetAvailableRoles(roomname);
+            Console.WriteLine("All available roles in \"{0}\"", roomname);
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine("\t{0}). {1}", i+1, list[i]);
+            }
         }
 
         public override void ListAll()
         {
-            Console.WriteLine("<Implementation needed to List all available roles>");
+            string roomname = board.currentPlayer.room.name;
+            List<Role> list = board.GetAllRoles(board.currentPlayer.room.name);
+            Console.WriteLine("All roles in \"{0}\"", roomname);
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine("\t{0}). {1}", i + 1, list[i]);
+            }
         }
 
         public override void Move()

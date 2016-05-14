@@ -23,7 +23,6 @@ namespace Deadwood.Model
         }
 
         // Methods
-
         public bool IsTaken()
         {
             return actor != null;
@@ -43,7 +42,11 @@ namespace Deadwood.Model
         {
             // TODO: implement logic to free this role
         }
-         
+
+        public override string ToString()
+        {
+            return string.Format("Rank: {0} - {1}: {2}", rank, name, desc);
+        }
 
     }
 }
