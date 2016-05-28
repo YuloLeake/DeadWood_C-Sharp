@@ -296,12 +296,13 @@ namespace Deadwood.Model
         public List<Role> GetAvailableRoles(string roomname)
         {
             // Check if roomname given is a valid roomname
-            if (roomToIndexDict.ContainsKey(roomname) == false)
+            try
             {
-                // TODO: make a ValidateRoom method or something, since we do this many times.
-                Console.Error.WriteLine("Error: room \"{0}\" does not exist", roomname);
-                // TODO: throw exception
-                return null;
+                ValidateRoom(roomname);
+            }
+            catch (KeyNotFoundException e)
+            {
+                throw;
             }
 
             List<Role> list = null;
@@ -311,9 +312,7 @@ namespace Deadwood.Model
             }
             catch (IllegalRoomActionException e)
             {
-                Console.WriteLine(e.msg);
-                // TODO: handle this better
-                list = new List<Role>();
+                throw;
             }
             return list;
         }
@@ -322,12 +321,13 @@ namespace Deadwood.Model
         public List<Role> GetAllRoles(string roomname)
         {
             // Check if roomname given is a valid roomname
-            if (roomToIndexDict.ContainsKey(roomname) == false)
+            try
             {
-                // TODO: make a ValidateRoom method or something, since we do this many times.
-                Console.Error.WriteLine("Error: room \"{0}\" does not exist", roomname);
-                // TODO: throw exception
-                return null;
+                ValidateRoom(roomname);
+            }
+            catch (KeyNotFoundException e)
+            {
+                throw;
             }
 
             List<Role> list = null;
@@ -378,6 +378,14 @@ namespace Deadwood.Model
             currentPlayerIdx %= playerCount;    // wrap it back
             currentPlayer = playerList[currentPlayerIdx];
 
+        }
+
+        private void ValidateRoom(string roomname)
+        {
+            if (roomToIndexDict.ContainsKey(roomname) == false)
+            {
+                throw new KeyNotFoundException(string.Format("Error: room \"{0}\" does not exist", roomname));
+            }
         }
     }
 }

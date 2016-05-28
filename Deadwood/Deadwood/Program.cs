@@ -4,6 +4,7 @@
  */
 
 using Deadwood.Model;
+using Deadwood.Model.Exceptions;
 using Deadwood.Model.Rooms;
 using System;
 using System.Collections.Generic;
@@ -89,9 +90,9 @@ namespace Deadwood
                     game.Move();
                     break;
                 case "work":
-                    Console.WriteLine("Input role name");
-                    string role = Console.ReadLine().ToLower().Trim();
-                    game.Work(role);
+                    //Console.WriteLine("Input role name");
+                    //string role = Console.ReadLine().ToLower().Trim();
+                    game.Work();
                     break;
                 case "upgrade":
                     Console.WriteLine("");
@@ -111,13 +112,16 @@ namespace Deadwood
         }
     }
 
+    /*
+     *  Abstract Deadwood class to implement the game logic
+     */
     abstract class Deadwood
     {
         public abstract bool IsGameOver();
         public abstract void Who();
         public abstract void Where();
         public abstract void Move();
-        public abstract void Work(string part);
+        public abstract void Work();
         public abstract void Rehearse();
         public abstract void Act();
         public abstract void End();
@@ -173,6 +177,9 @@ namespace Deadwood
         }
     }
 
+    /*
+     *  Dummy Deadwood class that prints stuff based on user input
+     */
     class DummyDeadwood : Deadwood
     {
         private bool isGameOver = false;
@@ -209,7 +216,9 @@ namespace Deadwood
 
         public override void Move()
         {
-            Console.WriteLine("Move to the \"" + "<room>" + "\"");
+            Console.WriteLine("We keep moving forward, opening new doors, and doing new things,    ");
+            Console.WriteLine("because we're curious and curiosity keeps leading us down new paths.");
+            Console.WriteLine("                                                      ---Walt Disney");
         }
 
         public override void PrintAdjacentsRooms()
@@ -245,12 +254,18 @@ namespace Deadwood
             Console.WriteLine("Who...are...you?\n ---The Caterpillar");
         }
 
-        public override void Work(string part)
+        public override void Work()
         {
-            Console.WriteLine("Work the \"" + part + "\" part");
+            Console.WriteLine("Coming together is a beginning;");
+            Console.WriteLine("keeping together is progress;  ");
+            Console.WriteLine("working together is success.   ");
+            Console.WriteLine("                  ---Henry Ford");
         }
     }
 
+    /*
+     *  Main Deadwood implementation
+     */
     class YuloDeadwood : Deadwood
     {
         private Board board;
@@ -301,6 +316,7 @@ namespace Deadwood
 
         public override void Move()
         {
+            // Print all adjacent rooms
             List<Room> list = board.GetAdjacentRooms();
             Console.WriteLine("Move player to:");
             for(int i = 0; i < list.Count; i++)
@@ -308,6 +324,8 @@ namespace Deadwood
                 Console.WriteLine("\t{0}). {1}", i + 1, list[i].name);
             }
             Console.WriteLine("\t0). Cancel");
+            
+            // Get roomname user wants to move
             Console.Write("\t> ");
             string roomname = Console.ReadLine();
 
@@ -329,12 +347,14 @@ namespace Deadwood
                 }
                 roomname = list[num - 1].name;
             }
+
+            // Check to see if user wishes to cancel move
             if (roomname.Equals("Cancel"))
             {
-                // User wishes to cancel out of the move
                 return;
             }
 
+            // Move user
             board.Move(roomname);
         }
 
@@ -375,8 +395,41 @@ namespace Deadwood
             Console.WriteLine("Current player is \"{0}\".", board.currentPlayer.name);
         }
 
-        public override void Work(string part)
+        public override void Work()
         {
+            // List all available parts
+            Player player = board.currentPlayer;
+            string roomname = player.room.name;
+            List<Role> roles = null;
+            try {
+                roles = board.GetAvailableRoles(roomname);
+            }
+            catch(IllegalRoomActionException e)
+            {
+                Console.WriteLine(e.msg);
+                return;
+            }
+
+            if(roles == null)
+            {
+                Console.WriteLine("Role list is empty... Something is up, check here.");
+                return;
+            }
+
+            Console.WriteLine("Available parts:");
+            for (int i = 0; i < roles.Count; i++)
+            {
+                Console.WriteLine("\t{0}). {1}", i + 1, roles[i]);
+            }
+            Console.WriteLine("\t0). Cancel");
+
+            // Get user input for the part
+
+            // Check if input is numerical
+
+            // See if user wants to cancel
+
+            // Take the part
             Console.WriteLine("<Implementation needed to Take a role>");
         }
     }
