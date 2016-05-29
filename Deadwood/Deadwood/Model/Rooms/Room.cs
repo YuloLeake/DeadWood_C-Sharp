@@ -25,6 +25,9 @@ namespace Deadwood.Model.Rooms
         public abstract List<Role> GetAllAvailableRoles();
         
         // Event triggered when a player moves into a room
-        public virtual void MoveInto() { }
+        public virtual void MoveInto()
+        {
+            Console.WriteLine("You've moved into {0}", name);
+        }
     }
 }

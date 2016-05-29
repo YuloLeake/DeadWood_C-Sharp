@@ -370,6 +370,19 @@ namespace Deadwood.Model
             }
         }
 
+        // Give current player the role
+        public void TakeRole(string rolename)
+        {
+            try
+            {
+                currentPlayer.TakeRole(rolename);
+            }
+            catch(IllegalUserActionException e)
+            {
+                Console.WriteLine(e.msg);
+            }
+        }
+
         // Player ends turn, switch to next player
         public void EndTurn()
         {

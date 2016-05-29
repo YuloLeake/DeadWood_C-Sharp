@@ -71,7 +71,19 @@ namespace Deadwood.Model
 
         public void TakeRole(string role)
         {
+            // TODO: put this logic in the state of the Player
+            // Check if player is already playing a role
+            if(this.role != null)
+            {
+                // Player is already playing a role, throw exception
+                throw new IllegalUserActionException(string.Format("Error: User is already playing the role\"{0}\"", this.role.name));
+            }
 
+            // Check if player's rank is sufficient for given role
+
+
+
+            // Give role to the player            
         }
 
         public void Upgrade()

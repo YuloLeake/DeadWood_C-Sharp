@@ -8,9 +8,9 @@ namespace Deadwood.Model
     class Role
     {
         protected Player actor = null;      // actor who has taken the role (Null if nobody)
-        protected readonly string name;     // name of the role
-        protected readonly string desc;     // description of the role
-        protected readonly int rank;        // difficulty of the role
+        public readonly string name;        // name of the role
+        public readonly string desc;        // description of the role
+        public readonly int rank;           // difficulty of the role
         protected int rehearsePoint         // rehearsePoint for this role (maybe put it to Player?)
         { get; private set; }        
         

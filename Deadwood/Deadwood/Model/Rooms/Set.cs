@@ -79,7 +79,6 @@ namespace Deadwood.Model.Rooms
         public override void MoveInto()
         {
             base.MoveInto();
-            Console.WriteLine("You've moved into {0}", name);
             // TODO: flip the scene card if it exists if it hasn't yet
         }
     }

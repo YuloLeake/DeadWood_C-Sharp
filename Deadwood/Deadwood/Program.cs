@@ -314,6 +314,7 @@ namespace Deadwood
             }
         }
 
+        // Move user to another room
         public override void Move()
         {
             // Print all adjacent rooms
@@ -383,18 +384,21 @@ namespace Deadwood
         {
             throw new NotImplementedException();
         }
-
+        
+        // Print where the current user is at
         public override void Where()
         {
             Player player = board.currentPlayer;
             Console.WriteLine("Player \"{0}\" is currently at \"{1}\".", player.name, player.room.name);
         }
 
+        // Print Current user's info
         public override void Who()
         {
             Console.WriteLine("Current player is \"{0}\".", board.currentPlayer.name);
         }
 
+        // User take a role
         public override void Work()
         {
             // List all available parts
@@ -424,13 +428,36 @@ namespace Deadwood
             Console.WriteLine("\t0). Cancel");
 
             // Get user input for the part
+            Console.Write("\t> ");
+            string rolename = Console.ReadLine();
 
-            // Check if input is numerical
+            // see if an input is numerical
+            int num = 0;
+            bool isNumeric = int.TryParse(roomname, out num);
+            if (isNumeric)
+            {
+                // numerical input, use position in list
+                if (num == 0)
+                {
+                    // User wishes to cancel out of the move.
+                    return;
+                }
+                else if (num < 0 || num > roles.Count)
+                {
+                    Console.WriteLine("Error: Numeric input out of index (make sure it's between 1 and {0})", roles.Count);
+                    return;
+                }
+                rolename = roles[num - 1].name;
+            }
 
             // See if user wants to cancel
+            if (rolename.Equals("Cancel"))
+            {
+                return;
+            }
 
             // Take the part
-            Console.WriteLine("<Implementation needed to Take a role>");
+            board.TakeRole(rolename);
         }
     }
 }
