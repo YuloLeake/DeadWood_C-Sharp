@@ -202,7 +202,7 @@ namespace Deadwood.Model
             this.playerList = new List<Player>(count);
             string[] colors = {"blue", "cyan", "green", "orange", "pink", "red", "violet", "yellow"}; // used as name for players
             int startingCred = 0;
-            int startingRank = 0;
+            int startingRank = 1;
 
             switch (count)
             {

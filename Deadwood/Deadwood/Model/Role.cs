@@ -3,6 +3,8 @@
  *  Copyright (c) Yulo Leake 2016
  */
 
+using Deadwood.Model.Exceptions;
+
 namespace Deadwood.Model
 {
     class Role
@@ -35,8 +37,13 @@ namespace Deadwood.Model
 
         public void AssignPlayer(Player actor)
         {
-            // TODO: check if actor's rank is sufficient
-
+            if(this.rank > actor.rank)
+            {
+                // actor's rank is insufficient, throw an exception
+                throw new IllegalUserActionException(string.Format("\"Hey {0}! You can't handle the \"{1}\"!"+
+                                                                   "(Your rank {2} is lower than the role's rank {3})", 
+                                                                   actor.name, this.name, actor.rank, this.rank));
+            }
 
             actor.SetRole(this);
             this.actor = actor;
