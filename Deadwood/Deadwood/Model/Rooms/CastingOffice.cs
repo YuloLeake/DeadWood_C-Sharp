@@ -52,7 +52,7 @@ namespace Deadwood.Model.Rooms
             throw new IllegalRoomActionException("There are no roles in the Casting Office.");
         }
 
-        public override Role TakeRole(string roleName)
+        public override Role GetRole(string roleName)
         {
             throw new IllegalRoomActionException("\"I am afraid I cannot let you do that\"\n(You cannot take up a role in the Casting Office)");
         }

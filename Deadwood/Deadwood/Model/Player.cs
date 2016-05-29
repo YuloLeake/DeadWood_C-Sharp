@@ -79,6 +79,9 @@ namespace Deadwood.Model
                 throw new IllegalUserActionException(string.Format("Error: User is already playing the role\"{0}\"", this.role.name));
             }
 
+            // Get role from current room
+            
+
             // Check if player's rank is sufficient for given role
 
 

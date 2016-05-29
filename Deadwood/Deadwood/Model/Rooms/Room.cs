@@ -20,7 +20,7 @@ namespace Deadwood.Model.Rooms
         public abstract void Act(Role r);
         public abstract void Rehearse(Role r);
         public abstract void Upgrade(Player p, int cr, int level);
-        public abstract Role TakeRole(String roleName);
+        public abstract Role GetRole(String roleName);
         public abstract List<Role> GetAllRoles();
         public abstract List<Role> GetAllAvailableRoles();
         

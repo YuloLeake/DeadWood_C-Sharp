@@ -14,12 +14,12 @@ namespace Deadwood.Model.Rooms
     {
         // Fields
         public int shotCount { get; private set; }
-        public List<Role> extraRoleList { get; private set; }
+        public Dictionary<string, Role> extraRoleDict { get; private set; }
 
         // Constructor
-        public Set(string name, List<Role> extraRoleList) : base(name)
+        public Set(string name, Dictionary<string, Role> extraRoleDict) : base(name)
         {
-            this.extraRoleList = extraRoleList;
+            this.extraRoleDict = extraRoleDict;
         }
 
         // Inherited methods
@@ -40,7 +40,7 @@ namespace Deadwood.Model.Rooms
             List<Role> list = new List<Role>();
             // TODO: get starring roles from scene
 
-            foreach(Role r in extraRoleList)
+            foreach(Role r in extraRoleDict.Values)
             {
                 if (r.IsTaken() == false)
                 {
@@ -55,7 +55,7 @@ namespace Deadwood.Model.Rooms
             List<Role> list = new List<Role>();
             // TODO: get starring roles from scene
 
-            foreach (Role r in extraRoleList)
+            foreach (Role r in extraRoleDict.Values)
             {
                 list.Add(r);
             }
@@ -63,12 +63,16 @@ namespace Deadwood.Model.Rooms
             return list;
         }
 
-        public override Role TakeRole(string roleName)
+        public override Role GetRole(string roleName)
         {
-            Role role = null;
-            // TODO: implement
-            Console.WriteLine("<Implementation of taking a role needed>");
-            return role;
+            // TODO: Take in account for Starring Roles
+            // Check if role exists
+            if (extraRoleDict.ContainsKey(roleName) == false)
+            {
+                // Given role does not exist, throw error
+                throw new IllegalUserActionException(string.Format("Given role name \"{0}\" does not exist in {1}", roleName, this.name));
+            }
+            return extraRoleDict[roleName];
         }
 
         public override void Upgrade(Player p, int cr, int level)

@@ -17,7 +17,7 @@ namespace Deadwood.Model.Factories
         readonly string[] roomnames = new string[]{"Trailers", "Casting Office",
                                                    "Train Station", "Jail", "General Store",
                                                    "Ranch", "Secret Hideout",
-                                                   "Main Street", "Saloon", 
+                                                   "Main Street", "Saloon",
                                                    "Bank", "Church", "Hotel" };
 
         // Singleton Constructor
@@ -26,7 +26,7 @@ namespace Deadwood.Model.Factories
         {
             get
             {
-                if(instance == null)
+                if (instance == null)
                 {
                     instance = new RawRoomFactory();
                 }
@@ -46,7 +46,7 @@ namespace Deadwood.Model.Factories
         {
             // TODO: set up Extra Roles for each Set
             Room room = null;
-            List<Role> roles = null;
+            Dictionary<string, Role> roles = null;
             IRoleFactory factory = RawRoleFactory.mInstance;
             switch (roomname)
             {
@@ -60,72 +60,72 @@ namespace Deadwood.Model.Factories
 
                 // Build Sets
                 case "Train Station":
-                    roles = new List<Role>();
-                    roles.Add(factory.CreateExtraRole("Crusty Prospector"));
-                    roles.Add(factory.CreateExtraRole("Dragged by Train"));
-                    roles.Add(factory.CreateExtraRole("Preacher with Bag"));
-                    roles.Add(factory.CreateExtraRole("Cyrus the Gunfighter"));
+                    roles = new Dictionary<string, Role>();
+                    AddRole(factory, roles, "Crusty Prospector");
+                    AddRole(factory, roles, "Dragged by Train");
+                    AddRole(factory, roles, "Preacher with Bag");
+                    AddRole(factory, roles, "Cyrus the Gunfighter");
                     room = new Set("Train Station", roles);
                     break;
                 case "Jail":
-                    roles = new List<Role>();
-                    roles.Add(factory.CreateExtraRole("Prisoner In Cell"));
-                    roles.Add(factory.CreateExtraRole("Feller in Irons"));
+                    roles = new Dictionary<string, Role>();
+                    AddRole(factory, roles, "Prisoner In Cell");
+                    AddRole(factory, roles, "Feller in Irons");
                     room = new Set("Jail", roles);
                     break;
                 case "General Store":
-                    roles = new List<Role>();
-                    roles.Add(factory.CreateExtraRole("Man in Overalls"));
-                    roles.Add(factory.CreateExtraRole("Mister Keach"));
+                    roles = new Dictionary<string, Role>();
+                    AddRole(factory, roles, "Man in Overalls");
+                    AddRole(factory, roles, "Mister Keach");
                     room = new Set("General Store", roles);
                     break;
                 case "Ranch":
-                    roles = new List<Role>();
-                    roles.Add(factory.CreateExtraRole("Shot in Leg"));
-                    roles.Add(factory.CreateExtraRole("Saucy Fred"));
-                    roles.Add(factory.CreateExtraRole("Man Under Horse"));
+                    roles = new Dictionary<string, Role>();
+                    AddRole(factory, roles, "Shot in Leg");
+                    AddRole(factory, roles, "Saucy Fred");
+                    AddRole(factory, roles, "Man Under Horse");
                     room = new Set("Ranch", roles);
                     break;
                 case "Secret Hideout":
-                    roles = new List<Role>();
-                    roles.Add(factory.CreateExtraRole("Clumsy Pit Fighter"));
-                    roles.Add(factory.CreateExtraRole("Thug with Knife"));
-                    roles.Add(factory.CreateExtraRole("Dangerous Tom"));
-                    roles.Add(factory.CreateExtraRole("Penny, who is lost"));
+                    roles = new Dictionary<string, Role>();
+                    AddRole(factory, roles, "Clumsy Pit Fighter");
+                    AddRole(factory, roles, "Thug with Knife");
+                    AddRole(factory, roles, "Dangerous Tom");
+                    AddRole(factory, roles, "Penny, who is lost");
                     room = new Set("Secret Hideout", roles);
                     break;
                 case "Main Street":
-                    roles = new List<Role>();
-                    roles.Add(factory.CreateExtraRole("Railroad Worker"));
-                    roles.Add(factory.CreateExtraRole("Falls off Roof"));
-                    roles.Add(factory.CreateExtraRole("Woman in Black Dress"));
-                    roles.Add(factory.CreateExtraRole("Mayor McGinty"));
+                    roles = new Dictionary<string, Role>();
+                    AddRole(factory, roles, "Railroad Worker");
+                    AddRole(factory, roles, "Falls off Roof");
+                    AddRole(factory, roles, "Woman in Black Dress");
+                    AddRole(factory, roles, "Mayor McGinty");
                     room = new Set("Main Street", roles);
                     break;
                 case "Saloon":
-                    roles = new List<Role>();
-                    roles.Add(factory.CreateExtraRole("Reluctant Farmer"));
-                    roles.Add(factory.CreateExtraRole("Woman in Red Dress"));
+                    roles = new Dictionary<string, Role>();
+                    AddRole(factory, roles, "Reluctant Farmer");
+                    AddRole(factory, roles, "Woman in Red Dress");
                     room = new Set("Saloon", roles);
                     break;
                 case "Bank":
-                    roles = new List<Role>();
-                    roles.Add(factory.CreateExtraRole("Suspicious Gentleman"));
-                    roles.Add(factory.CreateExtraRole("Flustered Teller"));
+                    roles = new Dictionary<string, Role>();
+                    AddRole(factory, roles, "Suspicious Gentleman");
+                    AddRole(factory, roles, "Flustered Teller");
                     room = new Set("Bank", roles);
                     break;
                 case "Church":
-                    roles = new List<Role>();
-                    roles.Add(factory.CreateExtraRole("Dead Man"));
-                    roles.Add(factory.CreateExtraRole("Crying Woman"));
+                    roles = new Dictionary<string, Role>();
+                    AddRole(factory, roles, "Dead Man");
+                    AddRole(factory, roles, "Crying Woman");
                     room = new Set("Church", roles);
                     break;
                 case "Hotel":
-                    roles = new List<Role>();
-                    roles.Add(factory.CreateExtraRole("Sleeping Drunkard"));
-                    roles.Add(factory.CreateExtraRole("Faro Player"));
-                    roles.Add(factory.CreateExtraRole("Falls from Balcony"));
-                    roles.Add(factory.CreateExtraRole("Australian Bartender"));
+                    roles = new Dictionary<string, Role>();
+                    AddRole(factory, roles, "Sleeping Drunkard");
+                    AddRole(factory, roles, "Faro Player");
+                    AddRole(factory, roles, "Falls from Balcony");
+                    AddRole(factory, roles, "Australian Bartender");
                     room = new Set("Hotel", roles);
                     break;
                 default:
@@ -133,6 +133,11 @@ namespace Deadwood.Model.Factories
                     break;
             }
             return room;
+        }
+
+        private void AddRole(IRoleFactory factory, Dictionary<string, Role> dict, string roleName)
+        {
+            dict[roleName] = factory.CreateExtraRole(roleName);
         }
     }
 }
