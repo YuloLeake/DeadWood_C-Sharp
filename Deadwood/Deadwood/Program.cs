@@ -433,7 +433,7 @@ namespace Deadwood
 
             // see if an input is numerical
             int num = 0;
-            bool isNumeric = int.TryParse(roomname, out num);
+            bool isNumeric = int.TryParse(rolename, out num);
             if (isNumeric)
             {
                 // numerical input, use position in list

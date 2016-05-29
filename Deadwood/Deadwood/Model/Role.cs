@@ -35,7 +35,11 @@ namespace Deadwood.Model
 
         public void AssignPlayer(Player actor)
         {
-            // TODO: implement player assingment logic
+            // TODO: check if actor's rank is sufficient
+
+
+            actor.SetRole(this);
+            this.actor = actor;
         }
 
         public void FreeRole()

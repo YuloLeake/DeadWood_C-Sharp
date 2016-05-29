@@ -3,6 +3,7 @@
  *  Copyright (c) Yulo Leake 2016
  */
 
+using System;
 using System.Collections.Generic;
 
 using Deadwood.Model.Rooms;
@@ -69,24 +70,41 @@ namespace Deadwood.Model
             dstRoom.MoveInto();
         }
 
-        public void TakeRole(string role)
+        public void TakeRole(string rolename)
         {
             // TODO: put this logic in the state of the Player
             // Check if player is already playing a role
             if(this.role != null)
             {
                 // Player is already playing a role, throw exception
-                throw new IllegalUserActionException(string.Format("Error: User is already playing the role\"{0}\"", this.role.name));
+                throw new IllegalUserActionException(string.Format("Error: User is already playing the role \"{0}\"", this.role.name));
             }
 
             // Get role from current room
-            
+            Role role = null;
+            try
+            {
+                role = this.room.GetRole(rolename);
+            }
+            catch(IllegalUserActionException e)
+            {
+                throw;
+            }
 
-            // Check if player's rank is sufficient for given role
+            if(role == null)
+            {
+                //TODO: do something in this case (probably throw an exception)
+                return;
+            }
 
+            // Assign player to the role
+            role.AssignPlayer(this);
+        }
 
-
-            // Give role to the player            
+        public void SetRole(Role role)
+        {
+            Console.WriteLine("Took the role \"{0}\"", role.name);
+            this.role = role;
         }
 
         public void Upgrade()
