@@ -52,7 +52,15 @@ namespace Deadwood.Model
 
         public void Rehearse()
         {
-
+            // TODO: put this logic in state of the Player
+            try
+            {
+                this.room.Rehearse(this.role);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public void Move(string dst)
@@ -120,8 +128,6 @@ namespace Deadwood.Model
                 p.room = Trailers.mInstance;
                 // TODO: free roles
             }
-
         }
-
     }
 }

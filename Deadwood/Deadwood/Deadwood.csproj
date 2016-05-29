@@ -57,6 +57,7 @@
     <Compile Include="Model\Rooms\Room.cs" />
     <Compile Include="Model\Rooms\Set.cs" />
     <Compile Include="Model\Rooms\Trailers.cs" />
+    <Compile Include="Model\Scene.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

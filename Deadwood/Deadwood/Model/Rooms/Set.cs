@@ -31,8 +31,16 @@ namespace Deadwood.Model.Rooms
 
         public override void Rehearse(Role r)
         {
-            // TODO: implement
-            Console.WriteLine("<Implementation of rehearsing needed>");
+            try
+            {
+                // TODO: Get budget from scene
+                int budget = 3;
+                r.Rehearse(budget);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public override List<Role> GetAllAvailableRoles()

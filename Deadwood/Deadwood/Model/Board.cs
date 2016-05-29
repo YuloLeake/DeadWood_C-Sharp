@@ -393,6 +393,18 @@ namespace Deadwood.Model
 
         }
 
+        public void Rehearse()
+        {
+            try
+            {
+                currentPlayer.Rehearse();
+            }
+            catch(IllegalUserActionException e)
+            {
+                Console.WriteLine(e.msg);
+            }
+        }
+
         private void ValidateRoom(string roomname)
         {
             if (roomToIndexDict.ContainsKey(roomname) == false)

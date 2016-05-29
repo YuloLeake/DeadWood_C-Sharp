@@ -372,7 +372,7 @@ namespace Deadwood
 
         public override void Rehearse()
         {
-            Console.WriteLine("<Implementation needed to Rehearse role>");
+            board.Rehearse();
         }
 
         public override void UpgradeCredits(int level)

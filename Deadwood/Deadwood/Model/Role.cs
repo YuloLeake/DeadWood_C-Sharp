@@ -30,9 +30,22 @@ namespace Deadwood.Model
             return actor != null;
         }
 
+        /*  Rehearse
+         *  Increases the rehearsePoint by 1
+         *  If the player can succeed with next dice role, throw an exception
+         */
         public void Rehearse(int budget)
         {
-            // TODO: implement rehearse logic
+            // Check if reached limit
+            if(this.rehearsePoint + 1 < budget)     // add 1 since the miminum dice roll is 1
+            {
+                this.rehearsePoint++;
+            }
+            else
+            {
+                // Will succeed with next dice roll, so throw an exception
+                throw new IllegalUserActionException("You have rehearsed enough. Act!"); 
+            }
         }
 
         public void AssignPlayer(Player actor)
