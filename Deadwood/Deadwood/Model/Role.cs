@@ -32,7 +32,7 @@ namespace Deadwood.Model
 
         /*  Rehearse
          *  Increases the rehearsePoint by 1
-         *  If the player can succeed with next dice role, throw an exception
+         *  If the player can succeed with next dice role (i.e. rehearsePoint + 1 == budget), throw an exception
          */
         public void Rehearse(int budget)
         {
@@ -50,6 +50,13 @@ namespace Deadwood.Model
 
         public void AssignPlayer(Player actor)
         {
+            if(this.actor != null)
+            {
+                // somebody else is playing, throw exception
+                throw new IllegalUserActionException(string.Format("The role {0} is already being played by {1}.",
+                                                                    this.name, this.actor.name));
+            }
+
             if(this.rank > actor.rank)
             {
                 // actor's rank is insufficient, throw an exception
@@ -65,6 +72,7 @@ namespace Deadwood.Model
         public void FreeRole()
         {
             // TODO: implement logic to free this role
+
         }
 
         public override string ToString()

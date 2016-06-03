@@ -49,8 +49,10 @@
     <Compile Include="Model\Exceptions\IllegalRoomActionException.cs" />
     <Compile Include="Model\Factories\IRoleFactory.cs" />
     <Compile Include="Model\Factories\IRoomFactory.cs" />
+    <Compile Include="Model\Factories\ISceneFactory.cs" />
     <Compile Include="Model\Factories\RawRoleFactory.cs" />
     <Compile Include="Model\Factories\RawRoomFactory.cs" />
+    <Compile Include="Model\Factories\RawSceneFactory.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="Model\Rooms\CastingOffice.cs" />

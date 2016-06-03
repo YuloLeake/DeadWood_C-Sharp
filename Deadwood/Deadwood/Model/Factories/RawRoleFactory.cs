@@ -177,9 +177,9 @@ namespace Deadwood.Model.Factories
             return new Role(name, desc, rank);
         }
 
-        public Role CreateStaringRole(string name)
+        public Role CreateStarringRole(string name)
         {
-            // Implement this
+            // TODO: Implement this
             Console.WriteLine("<Implementation needed>");
             throw new NotImplementedException();
         }

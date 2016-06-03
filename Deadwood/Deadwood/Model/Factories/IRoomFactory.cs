@@ -8,8 +8,6 @@
 
 using Deadwood.Model.Rooms;
 
-using System.Collections.Generic;
-
 namespace Deadwood.Model.Factories
 {
     interface IRoomFactory

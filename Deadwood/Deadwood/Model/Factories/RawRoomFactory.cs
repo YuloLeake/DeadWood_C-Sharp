@@ -44,7 +44,6 @@ namespace Deadwood.Model.Factories
 
         public Room CreateRoom(string roomname)
         {
-            // TODO: set up Extra Roles for each Set
             Room room = null;
             Dictionary<string, Role> roles = null;
             IRoleFactory factory = RawRoleFactory.mInstance;
@@ -137,6 +136,7 @@ namespace Deadwood.Model.Factories
 
         private void AddRole(IRoleFactory factory, Dictionary<string, Role> dict, string roleName)
         {
+            // TODO: set up delegates for extra roles.
             dict[roleName] = factory.CreateExtraRole(roleName);
         }
     }

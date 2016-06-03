@@ -4,9 +4,8 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Deadwood.Model.Rooms;
 
 namespace Deadwood.Model
 {
@@ -14,14 +13,18 @@ namespace Deadwood.Model
     {
         public readonly string name;
         public readonly string desc;
+        public readonly int sceneNum;
         public int budget { get; private set; }
         public bool revealed { get; private set; }
         public Dictionary<string, Role> starRoleDict { get; private set; }
 
-        public Scene(string name, string desc, int budget, Dictionary<string, Role> starRoleDict)
+        public Set set { get; private set; }
+
+        public Scene(string name, string desc, int sceneNum, int budget, Dictionary<string, Role> starRoleDict)
         {
             this.name = name;
             this.desc = desc;
+            this.sceneNum = sceneNum;
             this.budget = budget;
             this.revealed = false;
             this.starRoleDict = starRoleDict;
@@ -36,5 +39,9 @@ namespace Deadwood.Model
             }
         }
 
+        public void AssignSet(Set set)
+        {
+            this.set = set;
+        }
     }
 }
