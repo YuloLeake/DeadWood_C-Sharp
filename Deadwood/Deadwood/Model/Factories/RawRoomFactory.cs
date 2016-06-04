@@ -14,11 +14,12 @@ namespace Deadwood.Model.Factories
     class RawRoomFactory : IRoomFactory
     {
         // Fields
-        readonly string[] roomnames = new string[]{"Trailers", "Casting Office",
-                                                   "Train Station", "Jail", "General Store",
-                                                   "Ranch", "Secret Hideout",
-                                                   "Main Street", "Saloon",
-                                                   "Bank", "Church", "Hotel" };
+        // TODO: make this read from a text file at initialization
+        static readonly string[] roomnames = new string[]{"Trailers", "Casting Office",
+                                                                 "Train Station", "Jail", "General Store",
+                                                                 "Ranch", "Secret Hideout",
+                                                                 "Main Street", "Saloon",
+                                                                 "Bank", "Church", "Hotel"};
 
         // Singleton Constructor
         private static IRoomFactory instance = null;
@@ -36,12 +37,12 @@ namespace Deadwood.Model.Factories
 
         private RawRoomFactory() { }
 
-        // Interface methods
-        public string[] CreateRoomKeys()
+        public static string[] GetRoomNames()
         {
             return roomnames;
         }
 
+        // Interface methods
         public Room CreateRoom(string roomname)
         {
             Room room = null;

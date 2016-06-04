@@ -45,6 +45,9 @@ namespace Deadwood.Model
         string[] roomnames;
         bool[,] roomAdjMat;
 
+        // Scene stuff
+        private Stack<Scene> sceneDeck;
+
         public void SetUpBoard(int playerCount, Random rng)
         {
             this.playerCount = playerCount;
@@ -56,6 +59,7 @@ namespace Deadwood.Model
 
             SetUpRooms();
             SetUpAdjMat();
+            SetUpScenes();
             SetUpPlayers(playerCount);
 
             StartOfDay();
@@ -64,7 +68,7 @@ namespace Deadwood.Model
         private void SetUpRooms()
         {
             IRoomFactory factory = RawRoomFactory.mInstance;
-            roomnames = factory.CreateRoomKeys();
+            roomnames = RawRoomFactory.GetRoomNames();
 
             roomToIndexDict = new Dictionary<string, int>(roomnames.Length);
             for (int i = 0; i < roomnames.Length; i++)
@@ -209,7 +213,11 @@ namespace Deadwood.Model
                 case 2:
                 case 3:
                     Console.WriteLine("Special Rule: Only 3 days instead of 4");
-                    // TODO: pop 10 scene cards
+                    // POP 10 cards, since each day uses 10 scenes
+                    for (int i = 0; i < 10; i++)
+                    {
+                        sceneDeck.Pop();
+                    }
                     break;
                 case 5:
                     Console.WriteLine("Special Rule: Every player starts with 2 credits..");
@@ -236,9 +244,35 @@ namespace Deadwood.Model
             currentPlayer = playerList[currentPlayerIdx];
         }
 
+        // Create the 40 scenes in the game
+        private void SetUpScenes()
+        {
+            // Get scene names and create each scenes
+            List<Scene> scenes = new List<Scene>();
+            ISceneFactory factory = RawSceneFactory.mInstance;
+            string[] sceneNames = RawSceneFactory.GetSceneNames();
+            foreach(string s in sceneNames)
+            {
+                scenes.Add(factory.MakeScene(s));
+            }
+
+            // Shuffle the Scene list and put it in a stack
+            int n = scenes.Count;
+            Console.WriteLine(n);
+            while(n > 1)
+            {
+                n--;
+                int k = rng.Next(n+1);
+                Scene tmp = scenes[k];
+                scenes[k] = scenes[n];
+                scenes[n] = tmp;
+            }
+            sceneDeck = new Stack<Scene>(scenes);
+        }
+
         private void StartOfDay()
         {
-
+            // TODO: Put out 10 scene cards
             Player.BrandNewDay(playerList);
 
         }
@@ -386,13 +420,12 @@ namespace Deadwood.Model
         // Player ends turn, switch to next player
         public void EndTurn()
         {
-
             currentPlayerIdx++;
             currentPlayerIdx %= playerCount;    // wrap it back
             currentPlayer = playerList[currentPlayerIdx];
-
         }
 
+        // Make current player rehearse
         public void Rehearse()
         {
             try
