@@ -27,18 +27,18 @@ namespace Deadwood.Model.Factories
 
         private RawSceneFactory() { }
 
-        // TODO: missing one scene... Make it read from a text file at initialization
+        // TODO: Make it read from a text file at initialization
         static readonly string[] sceneNames = 
-            {"Evil Wears a Hat", "Law and the Old West", "The Life and Times of John Skywater", "Buffalo Bill: The Lost Years",
-             "Square Deal City", "Davy Crockett: A Drunkard's Tale", "The Way the West Was Run", "Down in the Valley",
-             "Ol' Shooter and Little Doll", "The Robbers of Trains", "Beyond the Pail: Life without Lactose", "A Man Called 'Cow'",
-             "Taffy Commercial", "Gum Commercial", "Jesse James: Man of Action", "Disaster at Flying J",
-             "Shakespear in Lubbock", "Go West, You!", "The Life and Times of John Skywater (Part 2)",  "Gun!The Musical",
-             "Humor at the Expense of Others", "The Search for Maggie White", "Picante Sauce Commercial", "Jesse James: Man of Action (Part 2)",
-             "One False Step for Mankind", "Thirteen the Hard Way", "How They Get Milk", "My Years on the Prairie",
-             "Davy Crockett: A Drunkard's Tale (Part 2)", "Czechs in the Sonora", "Swing 'em Wide", "Swing 'em Wide (Part 2)",
-             "Trials of the First Pioneers", "How the Grinch Stole Texas", "J. Robert Lucky, Man of Substance", "Thirteen the Hard Way (Part 2)",
-             "How They Get Milk (Part 2)", "Breakin' in Trick Ponies", "Custer's Other Stands"};
+            {"Evil Wears a Hat", "Law and the Old West", "The Life and Times of John Skywater", "My Years on the Prairie",
+             "Buffalo Bill: The Lost Years", "Square Deal City", "Davy Crockett: A Drunkard's Tale", "The Way the West Was Run",
+             "Down in the Valley", "Ol' Shooter and Little Doll", "The Robbers of Trains", "Beyond the Pail: Life without Lactose",
+             "A Man Called 'Cow'", "Taffy Commercial", "Gum Commercial", "Jesse James: Man of Action",
+             "Disaster at Flying J", "Shakespear in Lubbock", "Go West, You!", "The Life and Times of John Skywater (Part 2)",
+             "Gun!The Musical", "Humor at the Expense of Others", "The Search for Maggie White", "Picante Sauce Commercial",
+             "Jesse James: Man of Action (Part 2)", "One False Step for Mankind", "Thirteen the Hard Way", "How They Get Milk",
+             "My Years on the Prairie", "Davy Crockett: A Drunkard's Tale (Part 2)", "Czechs in the Sonora", "Swing 'em Wide",
+             "Swing 'em Wide (Part 2)", "Trials of the First Pioneers", "How the Grinch Stole Texas", "J. Robert Lucky, Man of Substance",
+             "Thirteen the Hard Way (Part 2)", "How They Get Milk (Part 2)", "Breakin' in Trick Ponies", "Custer's Other Stands"};
 
         public static string[] GetSceneNames()
         {
@@ -89,7 +89,7 @@ namespace Deadwood.Model.Factories
                     AddRole(factory, starRoleDict, "Auctioneer");
                     AddRole(factory, starRoleDict, "General Custer");
                     break;
-                case "eMy Yars on the Prairie":
+                case "My Years on the Prairie":
                     name = sceneName;
                     desc = "Virgil and Stacy set out at midnight to track down the stray cows, unaware that they are being pursued by inch - high aliens from outer space.";
                     budget = 5;
@@ -330,7 +330,7 @@ namespace Deadwood.Model.Factories
                     AddRole(factory, starRoleDict, "St. Clement of Alexandria");
                     AddRole(factory, starRoleDict, "Josie");
                     break;
-                case "My Years on the Prairie":
+                case "My Years on the Prairie (Part 2)":
                     name = sceneName;
                     desc = "Louise takes instruction from Henry, the neighbor boy, in an absurdly suggestive explanation of how to plow a field.";
                     budget = 5;

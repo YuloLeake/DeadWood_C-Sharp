@@ -7,6 +7,7 @@
 using Deadwood.Model.Exceptions;
 
 using System.Collections.Generic;
+using System;
 
 namespace Deadwood.Model.Rooms
 {
@@ -59,6 +60,11 @@ namespace Deadwood.Model.Rooms
         public override void Upgrade(Player p, int cr, int level)
         {
             throw new IllegalRoomActionException("\"The Casting Office is on the other side of the map.\"\n(You can only upgrade in the Casting Office, AKA not in the Trailers)");
+        }
+
+        public override void AssignScene(Scene scene)
+        {
+            throw new IllegalRoomActionException("You cannot assign a scene to Trailer");
         }
     }
 }

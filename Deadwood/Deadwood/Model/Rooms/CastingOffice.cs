@@ -62,5 +62,10 @@ namespace Deadwood.Model.Rooms
             // TODO: implement
             Console.WriteLine("<Implement upgrade>");
         }
+
+        public override void AssignScene(Scene scene)
+        {
+            throw new IllegalRoomActionException("You cannot assign a scene to Casting Office");
+        }
     }
 }

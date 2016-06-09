@@ -44,9 +44,12 @@ namespace Deadwood.Model
         private Dictionary<string, Room> roomNameToRoomDict;
         string[] roomnames;
         bool[,] roomAdjMat;
+        private List<Set> setList;
 
         // Scene stuff
         private Stack<Scene> sceneDeck;
+
+        private int wrapUpsLeft = 0; // when it hits 1, it's the end of the day
 
         public void SetUpBoard(int playerCount, Random rng)
         {
@@ -79,10 +82,13 @@ namespace Deadwood.Model
             roomNameToRoomDict = new Dictionary<string, Room>(roomnames.Length);
             roomNameToRoomDict["Trailers"] = factory.CreateRoom("Trailers");
             roomNameToRoomDict["Casting Office"] = factory.CreateRoom("Casting Office");
+            setList = new List<Set>();
             for (int i = 2; i < roomnames.Length; i++)
             {
                 // Skips Trailers and Casting Office, make all other Sets
-                roomNameToRoomDict[roomnames[i]] = factory.CreateRoom(roomnames[i]);
+                Set s = (Set)factory.CreateRoom(roomnames[i]);  // TODO: do a better job of casting (AKA, don't cast)
+                roomNameToRoomDict[roomnames[i]] = s;
+                setList.Add(s);
             }
         }
 
@@ -272,7 +278,18 @@ namespace Deadwood.Model
 
         private void StartOfDay()
         {
-            // TODO: Put out 10 scene cards
+            // Check if game over (0 scene cards)
+
+            // Put out a scene card to each set
+            Scene scene = null;
+            foreach(Set set in setList)
+            {
+                scene = sceneDeck.Pop();
+                set.AssignScene(scene);
+                wrapUpsLeft++;
+            }
+
+            Console.WriteLine("Scenes left = {0:d}", sceneDeck.Count);
             Player.BrandNewDay(playerList);
 
         }

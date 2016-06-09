@@ -15,6 +15,7 @@ namespace Deadwood.Model.Rooms
         // Fields
         public int shotCount { get; private set; }
         public Dictionary<string, Role> extraRoleDict { get; private set; }
+        public Scene scene { get; private set; } = null;
 
         // Constructor
         public Set(string name, Dictionary<string, Role> extraRoleDict) : base(name)
@@ -91,7 +92,24 @@ namespace Deadwood.Model.Rooms
         public override void MoveInto()
         {
             base.MoveInto();
-            // TODO: flip the scene card if it exists if it hasn't yet
+            if(this.scene != null)
+            {
+                // TODO: use better exception class
+                throw new IllegalRoomActionException("Set has no scene to flip");
+            }
+
+            this.scene.OnMoveInto();
+        }
+
+        public override void AssignScene(Scene scene)
+        {
+            if(this.scene != null)
+            {
+                throw new IllegalRoomActionException(string.Format("Error: {0} already has a scene {1}, shouldn't happen", this.name, this.scene.name));
+            }
+
+            this.scene = scene;
+            scene.AssignSet(this);
         }
     }
 }
