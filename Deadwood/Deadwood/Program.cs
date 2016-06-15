@@ -284,7 +284,7 @@ namespace Deadwood
 
         public override void Act()
         {
-            Console.WriteLine("<Implementation needed to Act the role>");
+            board.Act();
         }
 
         public override void End()

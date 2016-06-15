@@ -47,7 +47,7 @@ namespace Deadwood.Model
         // Public methods
         public void Act()
         {
-
+            Console.WriteLine("Implementation needed to act.");
         }
 
         public void Rehearse()

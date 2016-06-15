@@ -455,6 +455,19 @@ namespace Deadwood.Model
             }
         }
 
+        // Make current player act
+        public void Act()
+        {
+            try
+            {
+                currentPlayer.Act();
+            }
+            catch (IllegalUserActionException e)
+            {
+                Console.WriteLine(e.msg);
+            }
+        }
+
         private void ValidateRoom(string roomname)
         {
             if (roomToIndexDict.ContainsKey(roomname) == false)
@@ -462,5 +475,7 @@ namespace Deadwood.Model
                 throw new KeyNotFoundException(string.Format("Error: room \"{0}\" does not exist", roomname));
             }
         }
+        
+
     }
 }
