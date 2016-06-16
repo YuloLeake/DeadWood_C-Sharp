@@ -33,15 +33,15 @@ namespace Deadwood.Model.Rooms
         {
             int budget = this.scene.budget;
             int bonus  = r.rehearsePoint;
-            int role   = b.rng.Next(1, 7);  // Rolling the die, maybe change it to a function in Board class
+            int roll   = b.rng.Next(1, 7);  // Rolling the die [1,6], maybe change it to a function in Board class
 
             // TODO: for now, take it out later
-            Console.WriteLine("Rolled {0:d} + {1:d} against {2:d}.", role, bonus, budget);
+            Console.WriteLine("Rolled {0:d} ({1:d} + {2:d}) against {3:d}.", (roll+ bonus), roll, bonus, budget);
 
             // Evaluate player's roll
-            if(role + bonus >= budget)
+            if(roll + bonus >= budget)
             {
-                // Success
+                // Success, decrease remaining shot count and give reward to player
                 Console.WriteLine("\tSuccess!");
                 remainingShotCount--;
 
@@ -67,9 +67,10 @@ namespace Deadwood.Model.Rooms
         {
             try
             {
-                // TODO: Get budget from scene
-                int budget = 3;
+                int budget = this.scene.budget;
                 r.Rehearse(budget);
+                // TODO: temp
+                Console.WriteLine("You have {0:d} rehearse points (max of {1:d} points)", r.rehearsePoint, budget - 1);
             }
             catch
             {
