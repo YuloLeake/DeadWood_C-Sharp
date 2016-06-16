@@ -5,6 +5,8 @@
 
 using Deadwood.Model.Exceptions;
 
+using System;
+
 namespace Deadwood.Model
 {
     class Role
@@ -15,6 +17,7 @@ namespace Deadwood.Model
         public readonly int rank;           // difficulty of the role
         public int rehearsePoint { get; private set; } // rehearsePoint for this role
 
+        private Action<bool, Player> cbReward;
 
         // Constructors
         public Role(string name, string desc, int rank)
@@ -75,9 +78,23 @@ namespace Deadwood.Model
 
         }
 
+        public void Reward(bool success)
+        {
+            if(cbReward != null)
+            {
+                // Call the reward callback (implementation depends on this being a starring or extra role)
+                cbReward(success, this.actor);
+            }
+        }
+
         public override string ToString()
         {
             return string.Format("Rank: {0} - {1}: {2}", rank, name, desc);
+        }
+
+        public void RegisterRewardCallback(Action<bool, Player> callback)
+        {
+            this.cbReward = callback;
         }
 
     }

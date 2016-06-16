@@ -395,7 +395,20 @@ namespace Deadwood
         // Print Current user's info
         public override void Who()
         {
-            Console.WriteLine("Current player is \"{0}\".", board.currentPlayer.name);
+            Player p = board.currentPlayer;
+            Console.WriteLine("Player \"{0}\".", p.name);
+            Console.WriteLine("\tRoom: \"{0}\"", p.room.name);
+            if (p.role == null)
+            {
+                Console.WriteLine("\tRole: No role");
+            }
+            else
+            {
+                Console.WriteLine("\tRole: \"{0}\"", p.role.name);
+            }
+            Console.WriteLine("\tRank: {0}", p.rank);
+            Console.WriteLine("\tCredit: {0}cr", p.credit);
+            Console.WriteLine("\tMoney: ${0}", p.money);
         }
 
         // User take a role

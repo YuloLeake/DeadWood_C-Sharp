@@ -5,6 +5,7 @@
  *  Copyright (c) Yulo Leake 2016
  */
 
+using System;
 using System.Collections.Generic;
 
 namespace Deadwood.Model.Factories
@@ -458,7 +459,20 @@ namespace Deadwood.Model.Factories
 
         private void AddRole(IRoleFactory factory, Dictionary<string, Role> dict, string roleName)
         {
+            Role role = factory.CreateStarringRole(roleName);
+            role.RegisterRewardCallback(OnStarringRoleRewards);
             dict[roleName] = factory.CreateStarringRole(roleName);
+        }
+
+        // If success, player gets 2 credits (nothing if otherwise)
+        void OnStarringRoleRewards(bool success, Player p)
+        {
+            // TODO: Maybe put this into Role Factory or separate class, since it'll be redundent when doing XML
+            Console.WriteLine("Starring role reward for {0} and it was {1}", p.name, success);
+            if (success)
+            {
+                p.ChangeCredit(2);
+            }
         }
     }
 }

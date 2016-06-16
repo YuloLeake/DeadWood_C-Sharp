@@ -149,7 +149,27 @@ namespace Deadwood.Model.Factories
         private void AddRole(IRoleFactory factory, Dictionary<string, Role> dict, string roleName)
         {
             // TODO: set up delegates for extra roles.
-            dict[roleName] = factory.CreateExtraRole(roleName);
+            Role role = factory.CreateExtraRole(roleName);
+            role.RegisterRewardCallback(OnExtraRoleRewards);
+            dict[roleName] = role;
+        }
+
+        // If success, player gets 1 money and 1 credit
+        // Otherwise, give 1 money
+        void OnExtraRoleRewards(bool success, Player p)
+        {
+            // TODO: Maybe put this into Role Factory or separate class, since it'll be redundent when doing XML
+            Console.WriteLine("Extra role reward for {0} and it was {1}", p.name, success);
+            if (success)
+            {
+                p.ChangeMoney(1);
+                p.ChangeCredit(1);
+            }
+            else
+            {
+                p.ChangeMoney(1);
+            }
+
         }
     }
 }

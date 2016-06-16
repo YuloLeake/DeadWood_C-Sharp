@@ -45,6 +45,27 @@ namespace Deadwood.Model
         }
 
         // Public methods
+
+        // Change the money this player has by given value
+        // Throw an exception if it goes below 0
+        public void ChangeMoney(int dm)
+        {
+            int temp = money + dm;
+            // TODO: Make sure player cannot go in debt
+
+            this.money = temp;
+        }
+
+        // Change the credit this player has by given value
+        // Throw an exception if it goes below 0
+        public void ChangeCredit(int dc)
+        {
+            int temp = credit + dc;
+            // TODO: Make sure player cannot go in credit debt
+
+            this.credit = temp;
+        }
+
         public void Act()
         {
             if(this.role == null)

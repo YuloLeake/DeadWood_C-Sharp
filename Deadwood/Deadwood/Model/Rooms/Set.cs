@@ -18,7 +18,7 @@ namespace Deadwood.Model.Rooms
         public Dictionary<string, Role> extraRoleDict { get; private set; }
         public Scene scene { get; private set; } = null;
 
-        private static Board b = Board.mInstance;
+        private static Board board = Board.mInstance;
 
         // Constructor
         public Set(string name, Dictionary<string, Role> extraRoleDict, int shotCounts) : base(name)
@@ -29,11 +29,11 @@ namespace Deadwood.Model.Rooms
         }
 
         // Inherited methods
-        public override void Act(Role r)
+        public override void Act(Role role)
         {
             int budget = this.scene.budget;
-            int bonus  = r.rehearsePoint;
-            int roll   = b.rng.Next(1, 7);  // Rolling the die [1,6], maybe change it to a function in Board class
+            int bonus  = role.rehearsePoint;
+            int roll   = board.rng.Next(1, 7);  // Rolling the die [1,6], maybe change it to a function in Board class
 
             // TODO: for now, take it out later
             Console.WriteLine("Rolled {0:d} ({1:d} + {2:d}) against {3:d}.", (roll+ bonus), roll, bonus, budget);
@@ -45,7 +45,7 @@ namespace Deadwood.Model.Rooms
                 Console.WriteLine("\tSuccess!");
                 remainingShotCount--;
 
-                // TODO: Give reward to player
+                role.Reward(true);
 
                 if(remainingShotCount == 0)
                 {
@@ -59,7 +59,7 @@ namespace Deadwood.Model.Rooms
                 // Failure
                 Console.WriteLine("\tFailure!");
 
-                // TODO: Give reward to player
+                role.Reward(false);
             }
         }
 
@@ -69,6 +69,7 @@ namespace Deadwood.Model.Rooms
             {
                 int budget = this.scene.budget;
                 r.Rehearse(budget);
+
                 // TODO: temp
                 Console.WriteLine("You have {0:d} rehearse points (max of {1:d} points)", r.rehearsePoint, budget - 1);
             }
