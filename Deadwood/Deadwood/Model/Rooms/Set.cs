@@ -33,11 +33,34 @@ namespace Deadwood.Model.Rooms
         {
             int budget = this.scene.budget;
             int bonus  = r.rehearsePoint;
+            int role   = b.rng.Next(1, 7);  // Rolling the die, maybe change it to a function in Board class
 
+            // TODO: for now, take it out later
+            Console.WriteLine("Rolled {0:d} + {1:d} against {2:d}.", role, bonus, budget);
 
+            // Evaluate player's roll
+            if(role + bonus >= budget)
+            {
+                // Success
+                Console.WriteLine("\tSuccess!");
+                remainingShotCount--;
 
-            // TODO: implement
-            Console.WriteLine("<Implementation of acting needed>");
+                // TODO: Give reward to player
+
+                if(remainingShotCount == 0)
+                {
+                    // The Scene is wrap, distribute bonuses
+                    // TODO: distribute bonuses
+                }
+
+            }
+            else
+            {
+                // Failure
+                Console.WriteLine("\tFailure!");
+
+                // TODO: Give reward to player
+            }
         }
 
         public override void Rehearse(Role r)
