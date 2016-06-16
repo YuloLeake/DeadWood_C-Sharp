@@ -13,9 +13,9 @@ namespace Deadwood.Model
         public readonly string name;        // name of the role
         public readonly string desc;        // description of the role
         public readonly int rank;           // difficulty of the role
-        protected int rehearsePoint         // rehearsePoint for this role (maybe put it to Player?)
-        { get; private set; }        
-        
+        public int rehearsePoint { get; private set; } // rehearsePoint for this role
+
+
         // Constructors
         public Role(string name, string desc, int rank)
         {

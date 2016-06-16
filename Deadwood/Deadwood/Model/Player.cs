@@ -47,11 +47,31 @@ namespace Deadwood.Model
         // Public methods
         public void Act()
         {
-            Console.WriteLine("Implementation needed to act.");
+            if(this.role == null)
+            {
+                // TODO: incorporate this with one of the player stats
+                throw new IllegalUserActionException("You cannot act without playing a role");
+            }
+
+            // TODO: put this logic in state of the Player
+            try
+            {
+                this.room.Act(this.role);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public void Rehearse()
         {
+            if (this.role == null)
+            {
+                // TODO: incorporate this with one of the player stats
+                throw new IllegalUserActionException("You cannot rehearse without playing a role");
+            }
+
             // TODO: put this logic in state of the Player
             try
             {

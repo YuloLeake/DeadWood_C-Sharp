@@ -13,19 +13,29 @@ namespace Deadwood.Model.Rooms
     class Set : Room
     {
         // Fields
-        public int shotCount { get; private set; }
+        public int remainingShotCount { get; private set; }
+        private readonly int shotCounts;
         public Dictionary<string, Role> extraRoleDict { get; private set; }
         public Scene scene { get; private set; } = null;
 
+        private static Board b = Board.mInstance;
+
         // Constructor
-        public Set(string name, Dictionary<string, Role> extraRoleDict) : base(name)
+        public Set(string name, Dictionary<string, Role> extraRoleDict, int shotCounts) : base(name)
         {
             this.extraRoleDict = extraRoleDict;
+            this.shotCounts = shotCounts;
+            this.remainingShotCount = shotCounts;
         }
 
         // Inherited methods
         public override void Act(Role r)
         {
+            int budget = this.scene.budget;
+            int bonus  = r.rehearsePoint;
+
+
+
             // TODO: implement
             Console.WriteLine("<Implementation of acting needed>");
         }
@@ -92,7 +102,7 @@ namespace Deadwood.Model.Rooms
         public override void MoveInto()
         {
             base.MoveInto();
-            if(this.scene != null)
+            if(this.scene == null)
             {
                 // TODO: use better exception class
                 throw new IllegalRoomActionException("Set has no scene to flip");
@@ -101,6 +111,8 @@ namespace Deadwood.Model.Rooms
             this.scene.OnMoveInto();
         }
 
+        // Assign the given scene to this Set and assign this Set to the given scene
+        // Then reset the remainingShotCount since this will be called at the start of the day
         public override void AssignScene(Scene scene)
         {
             if(this.scene != null)
@@ -108,8 +120,12 @@ namespace Deadwood.Model.Rooms
                 throw new IllegalRoomActionException(string.Format("Error: {0} already has a scene {1}, shouldn't happen", this.name, this.scene.name));
             }
 
+            // Assigning scene to this and this to scene
             this.scene = scene;
             scene.AssignSet(this);
+
+            // Reset remainingShotCount
+            this.remainingShotCount = this.shotCounts;
         }
     }
 }

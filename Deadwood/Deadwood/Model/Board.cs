@@ -37,7 +37,7 @@ namespace Deadwood.Model
         public Player currentPlayer { get; private set; }
         private int currentPlayerIdx;
 
-        private Random rng;
+        public Random rng { get; private set; }
 
         // Room fields
         private Dictionary<string, int> roomToIndexDict;

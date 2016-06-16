@@ -48,6 +48,7 @@ namespace Deadwood.Model.Factories
             Room room = null;
             Dictionary<string, Role> roles = null;
             IRoleFactory factory = RawRoleFactory.mInstance;
+            int shotCount = 0;
             switch (roomname)
             {
                 // Build pre-defined rooms
@@ -65,26 +66,30 @@ namespace Deadwood.Model.Factories
                     AddRole(factory, roles, "Dragged by Train");
                     AddRole(factory, roles, "Preacher with Bag");
                     AddRole(factory, roles, "Cyrus the Gunfighter");
-                    room = new Set("Train Station", roles);
+                    shotCount = 3;
+                    room = new Set(roomname, roles, shotCount);
                     break;
                 case "Jail":
                     roles = new Dictionary<string, Role>();
                     AddRole(factory, roles, "Prisoner In Cell");
                     AddRole(factory, roles, "Feller in Irons");
-                    room = new Set("Jail", roles);
+                    shotCount = 1;
+                    room = new Set(roomname, roles, shotCount);
                     break;
                 case "General Store":
                     roles = new Dictionary<string, Role>();
                     AddRole(factory, roles, "Man in Overalls");
                     AddRole(factory, roles, "Mister Keach");
-                    room = new Set("General Store", roles);
+                    shotCount = 2;
+                    room = new Set(roomname, roles, shotCount);
                     break;
                 case "Ranch":
                     roles = new Dictionary<string, Role>();
                     AddRole(factory, roles, "Shot in Leg");
                     AddRole(factory, roles, "Saucy Fred");
                     AddRole(factory, roles, "Man Under Horse");
-                    room = new Set("Ranch", roles);
+                    shotCount = 2;
+                    room = new Set(roomname, roles, shotCount);
                     break;
                 case "Secret Hideout":
                     roles = new Dictionary<string, Role>();
@@ -92,7 +97,8 @@ namespace Deadwood.Model.Factories
                     AddRole(factory, roles, "Thug with Knife");
                     AddRole(factory, roles, "Dangerous Tom");
                     AddRole(factory, roles, "Penny, who is lost");
-                    room = new Set("Secret Hideout", roles);
+                    shotCount = 3;
+                    room = new Set(roomname, roles, shotCount);
                     break;
                 case "Main Street":
                     roles = new Dictionary<string, Role>();
@@ -100,25 +106,29 @@ namespace Deadwood.Model.Factories
                     AddRole(factory, roles, "Falls off Roof");
                     AddRole(factory, roles, "Woman in Black Dress");
                     AddRole(factory, roles, "Mayor McGinty");
-                    room = new Set("Main Street", roles);
+                    shotCount = 3;
+                    room = new Set(roomname, roles, shotCount);
                     break;
                 case "Saloon":
                     roles = new Dictionary<string, Role>();
                     AddRole(factory, roles, "Reluctant Farmer");
                     AddRole(factory, roles, "Woman in Red Dress");
-                    room = new Set("Saloon", roles);
+                    shotCount = 2;
+                    room = new Set(roomname, roles, shotCount);
                     break;
                 case "Bank":
                     roles = new Dictionary<string, Role>();
                     AddRole(factory, roles, "Suspicious Gentleman");
                     AddRole(factory, roles, "Flustered Teller");
-                    room = new Set("Bank", roles);
+                    shotCount = 1;
+                    room = new Set(roomname, roles, shotCount);
                     break;
                 case "Church":
                     roles = new Dictionary<string, Role>();
                     AddRole(factory, roles, "Dead Man");
                     AddRole(factory, roles, "Crying Woman");
-                    room = new Set("Church", roles);
+                    shotCount = 2;
+                    room = new Set(roomname, roles, shotCount);
                     break;
                 case "Hotel":
                     roles = new Dictionary<string, Role>();
@@ -126,7 +136,8 @@ namespace Deadwood.Model.Factories
                     AddRole(factory, roles, "Faro Player");
                     AddRole(factory, roles, "Falls from Balcony");
                     AddRole(factory, roles, "Australian Bartender");
-                    room = new Set("Hotel", roles);
+                    shotCount = 3;
+                    room = new Set(roomname, roles, shotCount);
                     break;
                 default:
                     // TODO: raise exception
