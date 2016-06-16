@@ -23,6 +23,10 @@ namespace Deadwood.Model.Rooms
         public abstract Role GetRole(String roleName);
         public abstract List<Role> GetAllRoles();
         public abstract List<Role> GetAllAvailableRoles();
+        public abstract List<Role> GetAllExtraRoles();
+        public abstract List<Role> GetAvailableExtraRoles();
+        public abstract List<Role> GetAllStarringRoles();
+        public abstract List<Role> GetAvailableStarringRoles();
         public abstract void AssignScene(Scene scene);
         
         // Event triggered when a player moves into a room

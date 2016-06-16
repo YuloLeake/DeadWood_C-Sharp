@@ -8,6 +8,7 @@ using Deadwood.Model.Exceptions;
 using Deadwood.Model.Rooms;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Deadwood
 {
@@ -294,23 +295,43 @@ namespace Deadwood
 
         public override void List()
         {
-            string roomname = board.currentPlayer.room.name;
-            List<Role> list = board.GetAvailableRoles(roomname);
-            Console.WriteLine("All available roles in \"{0}\"", roomname);
-            for (int i = 0; i < list.Count; i++)
+            try
             {
-                Console.WriteLine("\t{0}). {1}", i+1, list[i]);
+                // Get both starring and extra roles
+                string roomname = board.currentPlayer.room.name;
+                List<Role> stars = board.GetAvailableStarringRoles(roomname);
+                List<Role> extras = board.GetAvailableExtraRoles(roomname);
+                Console.WriteLine("All available roles in \"{0}\"", roomname);
+                // Print starring roles first
+                ListRoles(stars, "\t{0}). Star - {1}", 1);
+
+                // Print extra roles
+                ListRoles(extras, "\t{0}). Extra - {1}", stars.Count + 1);
+            }
+            catch(IllegalRoomActionException e)
+            {
+                Console.WriteLine(e.msg);
             }
         }
 
         public override void ListAll()
         {
-            string roomname = board.currentPlayer.room.name;
-            List<Role> list = board.GetAllRoles(board.currentPlayer.room.name);
-            Console.WriteLine("All roles in \"{0}\"", roomname);
-            for (int i = 0; i < list.Count; i++)
+            try
             {
-                Console.WriteLine("\t{0}). {1}", i + 1, list[i]);
+                // Get both starring and extra roels
+                string roomname = board.currentPlayer.room.name;
+                List<Role> stars = board.GetAllStarringRoles(roomname);
+                List<Role> extras = board.GetAllExtraRoles(roomname);
+                Console.WriteLine("All roles in \"{0}\"", roomname);
+                // Print starring roles first
+                ListRoles(stars, "\t{0}). Star - {1}", 1);
+
+                // Print extra roles
+                ListRoles(extras, "\t{0}). Extra - {1}", stars.Count + 1);
+            }
+            catch (IllegalRoomActionException e)
+            {
+                Console.WriteLine(e.msg);
             }
         }
 
@@ -411,38 +432,45 @@ namespace Deadwood
             Console.WriteLine("\tMoney: ${0}", p.money);
         }
 
+        // List roles with given format and offset
+        private void ListRoles(List<Role> roles, string format, int offset)
+        {
+            for (int i = 0; i < roles.Count; i++)
+            {
+                Console.WriteLine(format, i + offset, roles[i]);
+            }
+        }
+
         // User take a role
         public override void Work()
         {
-            // List all available parts
+            // Get available roles (stars and extras) and list them
             Player player = board.currentPlayer;
             string roomname = player.room.name;
-            List<Role> roles = null;
-            try {
-                roles = board.GetAvailableRoles(roomname);
-            }
-            catch(IllegalRoomActionException e)
+            List<Role> stars;
+            List<Role> extras;
+            try
             {
+                stars = board.GetAvailableStarringRoles(roomname);
+                extras = board.GetAvailableExtraRoles(roomname);
+            }
+            catch (IllegalRoomActionException e)
+            {
+                // Empty roles, print error and return
                 Console.WriteLine(e.msg);
                 return;
             }
 
-            if(roles == null)
-            {
-                Console.WriteLine("Role list is empty... Something is up, check here.");
-                return;
-            }
-
-            Console.WriteLine("Available parts:");
-            for (int i = 0; i < roles.Count; i++)
-            {
-                Console.WriteLine("\t{0}). {1}", i + 1, roles[i]);
-            }
+            // List available roles
+            Console.WriteLine("Available roles:");
+            ListRoles(stars, "\t{0}). Star - {1}", 1);
+            ListRoles(extras, "\t{0}). Extra - {1}", stars.Count + 1);
             Console.WriteLine("\t0). Cancel");
 
             // Get user input for the part
             Console.Write("\t> ");
             string rolename = Console.ReadLine();
+            List<Role> roles = stars.Concat(extras).ToList();   // Small enough lists, so no need to use AddRange()
 
             // see if an input is numerical
             int num = 0;
@@ -453,19 +481,25 @@ namespace Deadwood
                 if (num == 0)
                 {
                     // User wishes to cancel out of the move.
-                    return;
+                    rolename = "Cancel";
                 }
                 else if (num < 0 || num > roles.Count)
                 {
+                    // Out of bound, print Error 
                     Console.WriteLine("Error: Numeric input out of index (make sure it's between 1 and {0})", roles.Count);
                     return;
                 }
-                rolename = roles[num - 1].name;
+                else
+                {
+                    // Get the actual rolename
+                    rolename = roles[num - 1].name;
+                }
             }
 
-            // See if user wants to cancel
             if (rolename.Equals("Cancel"))
             {
+                // User wishes to cancel, print message and return
+                Console.WriteLine("\tYou have canceled the selection");
                 return;
             }
 

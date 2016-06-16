@@ -67,5 +67,25 @@ namespace Deadwood.Model.Rooms
         {
             throw new IllegalRoomActionException("You cannot assign a scene to Casting Office");
         }
+
+        public override List<Role> GetAllExtraRoles()
+        {
+            throw new IllegalRoomActionException("There are no roles in the Casting Office.");
+        }
+
+        public override List<Role> GetAvailableExtraRoles()
+        {
+            throw new IllegalRoomActionException("There are no roles in the Casting Office.");
+        }
+
+        public override List<Role> GetAllStarringRoles()
+        {
+            throw new IllegalRoomActionException("There are no roles in the Casting Office.");
+        }
+
+        public override List<Role> GetAvailableStarringRoles()
+        {
+            throw new IllegalRoomActionException("There are no roles in the Casting Office.");
+        }
     }
 }

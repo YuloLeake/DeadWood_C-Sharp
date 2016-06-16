@@ -89,7 +89,11 @@ namespace Deadwood.Model
 
         public override string ToString()
         {
-            return string.Format("Rank: {0} - {1}: {2}", rank, name, desc);
+            if (this.IsTaken())
+            {
+                return string.Format("Rank: {0} - {1}, played by {3}: \"{2}\"", rank, name, desc, this.actor.name);
+            }
+            return string.Format("Rank: {0} - {1}: \"{2}\"", rank, name, desc);
         }
 
         public void RegisterRewardCallback(Action<bool, Player> callback)

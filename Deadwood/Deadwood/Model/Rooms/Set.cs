@@ -7,6 +7,7 @@ using Deadwood.Model.Exceptions;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Deadwood.Model.Rooms
 {
@@ -109,8 +110,13 @@ namespace Deadwood.Model.Rooms
 
         public override Role GetRole(string roleName)
         {
-            // TODO: Take in account for Starring Roles
-            // Check if role exists
+            // Check if role exists in star
+            if(scene.starRoleDict.ContainsKey(roleName))
+            {
+                return scene.starRoleDict[roleName];
+            }
+
+            // Check if role exists in extra
             if (extraRoleDict.ContainsKey(roleName) == false)
             {
                 // Given role does not exist, throw error
@@ -151,6 +157,48 @@ namespace Deadwood.Model.Rooms
 
             // Reset remainingShotCount
             this.remainingShotCount = this.shotCounts;
+        }
+
+        // Return all extra roles, regardless of there availability
+        public override List<Role> GetAllExtraRoles()
+        {
+            // Simply convert it to list
+            return extraRoleDict.Values.ToList();
+        }
+
+        // Return only the availabe extra roles
+        public override List<Role> GetAvailableExtraRoles()
+        {
+            // Filter out roles that are taken, then convert it to list
+            return extraRoleDict.Values.Where(role => !role.IsTaken()).ToList();
+        }
+
+        // Return all starring roles, regardless of there availablility
+        public override List<Role> GetAllStarringRoles()
+        {
+            if(this.scene == null)
+            {
+                // Scene is wrap, no list, throw error
+                // TODO: throw an error
+                return null;
+            }
+
+            // Simply convert it to list
+            return scene.starRoleDict.Values.ToList();
+        }
+
+        // Return only the available starring roles
+        public override List<Role> GetAvailableStarringRoles()
+        {
+            if (this.scene == null)
+            {
+                // Scene is wrap, no list, throw error
+                // TODO: throw an error
+                return null;
+            }
+
+            // Filter out roles that are taken, then convert it to list
+            return scene.starRoleDict.Values.Where(role => !role.IsTaken()).ToList();
         }
     }
 }

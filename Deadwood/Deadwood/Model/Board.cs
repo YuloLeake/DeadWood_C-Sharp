@@ -395,6 +395,94 @@ namespace Deadwood.Model
             return list;
         }
 
+        // Return a list of all available starring roles in given room
+        public List<Role> GetAvailableStarringRoles(string roomname)
+        {
+            try
+            {
+                // Check if given roomname is a valid one
+                ValidateRoom(roomname);
+                // Get available starring roles
+                return roomNameToRoomDict[roomname].GetAvailableStarringRoles();
+            }
+            catch (KeyNotFoundException)
+            {
+                // Given roomname was not valid, throw an error
+                throw;
+            }
+            catch (IllegalRoomActionException)
+            {
+                // There were no available roles
+                throw;
+            }
+        }
+
+        // Return a list of all starring roles in given room, regardless of their availability
+        public List<Role> GetAllStarringRoles(string roomname)
+        {
+            try
+            {
+                // Check if given roomname is a valid one
+                ValidateRoom(roomname);
+                // Get all starring roles
+                return roomNameToRoomDict[roomname].GetAllStarringRoles();
+            }
+            catch (KeyNotFoundException)
+            {
+                // Given roomname was not valid, throw an error
+                throw;
+            }
+            catch (IllegalRoomActionException)
+            {
+                // There were no available roles
+                throw;
+            }
+        }
+
+        // Return a list of all available extra roles in given room
+        public List<Role> GetAvailableExtraRoles(string roomname)
+        {
+            try
+            {
+                // Check if given roomname is a valid one
+                ValidateRoom(roomname);
+                // Get available extra roles
+                return roomNameToRoomDict[roomname].GetAvailableExtraRoles();
+            }
+            catch (KeyNotFoundException)
+            {
+                // Given roomname was not valid, throw an error
+                throw;
+            }
+            catch (IllegalRoomActionException)
+            {
+                // There were no available roles
+                throw;
+            }
+        }
+
+        // Return a list of all extra roles in given room, regardless of their availability
+        public List<Role> GetAllExtraRoles(string roomname)
+        {
+            try
+            {
+                // Check if given roomname is a valid one
+                ValidateRoom(roomname);
+                // Get all extra roles
+                return roomNameToRoomDict[roomname].GetAllExtraRoles();
+            }
+            catch (KeyNotFoundException)
+            {
+                // Given roomname was not valid, throw an error
+                throw;
+            }
+            catch (IllegalRoomActionException)
+            {
+                // There were no available roles
+                throw;
+            }
+        }
+
         public Room getRoom(string roomname)
         {
             if(roomNameToRoomDict.ContainsKey(roomname) == false)

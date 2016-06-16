@@ -66,5 +66,25 @@ namespace Deadwood.Model.Rooms
         {
             throw new IllegalRoomActionException("You cannot assign a scene to Trailer");
         }
+
+        public override List<Role> GetAllExtraRoles()
+        {
+            throw new IllegalRoomActionException("There are no roles in the Trailers.");
+        }
+
+        public override List<Role> GetAvailableExtraRoles()
+        {
+            throw new IllegalRoomActionException("There are no roles in the Trailers.");
+        }
+
+        public override List<Role> GetAllStarringRoles()
+        {
+            throw new IllegalRoomActionException("There are no roles in the Trailers.");
+        }
+
+        public override List<Role> GetAvailableStarringRoles()
+        {
+            throw new IllegalRoomActionException("There are no roles in the Trailers.");
+        }
     }
 }
