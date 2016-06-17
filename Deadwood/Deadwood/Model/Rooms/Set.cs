@@ -134,6 +134,11 @@ namespace Deadwood.Model.Rooms
         // Return all extra roles, regardless of there availability
         public override List<Role> GetAllExtraRoles()
         {
+            if (this.scene == null)
+            {
+                // Scene is wrap, no list, throw error
+                throw new IllegalRoomActionException("Scene has wrapped, come back tomorrow.");
+            }
             // Simply convert it to list
             return extraRoleDict.Values.ToList();
         }
@@ -141,6 +146,11 @@ namespace Deadwood.Model.Rooms
         // Return only the availabe extra roles
         public override List<Role> GetAvailableExtraRoles()
         {
+            if (this.scene == null)
+            {
+                // Scene is wrap, no list, throw error
+                throw new IllegalRoomActionException("Scene has wrapped, come back tomorrow.");
+            }
             // Filter out roles that are taken, then convert it to list
             return extraRoleDict.Values.Where(role => !role.IsTaken()).ToList();
         }
@@ -151,10 +161,8 @@ namespace Deadwood.Model.Rooms
             if(this.scene == null)
             {
                 // Scene is wrap, no list, throw error
-                // TODO: throw an error
-                return null;
+                throw new IllegalRoomActionException("Scene has wrapped, come back tomorrow.");
             }
-
             // Simply convert it to list
             return scene.starRoleDict.Values.ToList();
         }
@@ -165,10 +173,8 @@ namespace Deadwood.Model.Rooms
             if (this.scene == null)
             {
                 // Scene is wrap, no list, throw error
-                // TODO: throw an error
-                return null;
+                throw new IllegalRoomActionException("Scene has wrapped, come back tomorrow.");
             }
-
             // Filter out roles that are taken, then convert it to list
             return scene.starRoleDict.Values.Where(role => !role.IsTaken()).ToList();
         }
