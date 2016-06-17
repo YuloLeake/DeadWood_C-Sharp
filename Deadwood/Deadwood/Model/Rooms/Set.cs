@@ -76,7 +76,7 @@ namespace Deadwood.Model.Rooms
                 // TODO: temp
                 Console.WriteLine("You have {0:d} rehearse points (max of {1:d} points)", r.rehearsePoint, budget - 1);
             }
-            catch
+            catch(IllegalUserActionException)
             {
                 throw;
             }
@@ -190,8 +190,6 @@ namespace Deadwood.Model.Rooms
         // Tell the board that it has wrapped a scene
         private void WrapScene()
         {
-            // TODO: Actually implemnt it
-
             // Tell the scene to wrap the scene
             this.scene.WrapScene();
 

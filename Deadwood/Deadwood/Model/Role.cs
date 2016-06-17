@@ -47,7 +47,7 @@ namespace Deadwood.Model
             else
             {
                 // Will succeed with next dice roll, so throw an exception
-                throw new IllegalUserActionException("You have rehearsed enough. Act!"); 
+                throw new IllegalUserActionException("\"You have rehearsed enough. It's time for you to ACT!\""); 
             }
         }
 

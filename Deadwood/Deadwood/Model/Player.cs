@@ -144,7 +144,11 @@ namespace Deadwood.Model
 
         public void FreeRole()
         {
-            Console.WriteLine("Freeing the role \"{0}\"", role.name);
+            if(this.role != null)
+            {
+                // temp
+                Console.WriteLine("Freeing the role \"{0}\"", role.name);
+            }
             this.role = null;
         }
 
@@ -159,7 +163,7 @@ namespace Deadwood.Model
             foreach(Player p in players)
             {
                 p.room = Trailers.mInstance;
-                // TODO: free roles
+                p.FreeRole();
             }
         }
     }

@@ -31,7 +31,6 @@ namespace Deadwood.Model.Factories
         {
             string desc = null;
             int rank = 0;
-            // TODO: give each role a lambda function for successfully acting
             switch (name)
             {
                 // Roles at Train Station
@@ -700,7 +699,6 @@ namespace Deadwood.Model.Factories
                     // TODO: throw exception
                     break;
             }
-            // TODO: add delegate for acting
             return new Role(name, desc, rank);
         }
     }

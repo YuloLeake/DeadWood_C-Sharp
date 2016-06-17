@@ -44,7 +44,7 @@ namespace Deadwood.Model
         private Dictionary<string, Room> roomNameToRoomDict;
         string[] roomnames;
         bool[,] roomAdjMat;
-        private List<Set> setList;
+        private List<Room> setList;
 
         // Scene stuff
         private Stack<Scene> sceneDeck;
@@ -82,11 +82,11 @@ namespace Deadwood.Model
             roomNameToRoomDict = new Dictionary<string, Room>(roomnames.Length);
             roomNameToRoomDict["Trailers"] = factory.CreateRoom("Trailers");
             roomNameToRoomDict["Casting Office"] = factory.CreateRoom("Casting Office");
-            setList = new List<Set>();
+            setList = new List<Room>();
             for (int i = 2; i < roomnames.Length; i++)
             {
                 // Skips Trailers and Casting Office, make all other Sets
-                Set s = (Set)factory.CreateRoom(roomnames[i]);  // TODO: do a better job of casting (AKA, don't cast)
+                Room s = factory.CreateRoom(roomnames[i]); 
                 roomNameToRoomDict[roomnames[i]] = s;
                 setList.Add(s);
             }

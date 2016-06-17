@@ -348,7 +348,7 @@ namespace Deadwood
             Console.WriteLine("\t0). Cancel");
             
             // Get roomname user wants to move
-            Console.Write("\t> ");
+            Console.Write("> ");
             string roomname = Console.ReadLine();
 
             // see if an input is numerical
@@ -468,7 +468,7 @@ namespace Deadwood
             Console.WriteLine("\t0). Cancel");
 
             // Get user input for the part
-            Console.Write("\t> ");
+            Console.Write("> ");
             string rolename = Console.ReadLine();
             List<Role> roles = stars.Concat(extras).ToList();   // Small enough lists, so no need to use AddRange()
 

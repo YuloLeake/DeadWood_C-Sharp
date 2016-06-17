@@ -148,7 +148,6 @@ namespace Deadwood.Model.Factories
 
         private void AddRole(IRoleFactory factory, Dictionary<string, Role> dict, string roleName)
         {
-            // TODO: set up delegates for extra roles.
             Role role = factory.CreateExtraRole(roleName);
             role.RegisterRewardCallback(OnExtraRoleRewards);
             dict[roleName] = role;
