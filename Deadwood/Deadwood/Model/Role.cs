@@ -72,10 +72,12 @@ namespace Deadwood.Model
             this.actor = actor;
         }
 
+        // Reset the rehearse point and deattach itself from the actor
         public void FreeRole()
         {
-            // TODO: implement logic to free this role
-
+            this.rehearsePoint = 0;
+            actor.FreeRole();
+            actor = null;
         }
 
         public void Reward(bool success)

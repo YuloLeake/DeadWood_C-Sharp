@@ -44,22 +44,24 @@ namespace Deadwood.Model.Rooms
             {
                 // Success, decrease remaining shot count and give reward to player
                 Console.WriteLine("\tSuccess!");
-                remainingShotCount--;
-
                 role.Reward(true);
-
+                remainingShotCount--;
                 if(remainingShotCount == 0)
                 {
                     // The Scene is wrap, distribute bonuses
-                    // TODO: distribute bonuses
+                    Console.WriteLine("This is a wrap for \"{0}\"!", this.scene.name);
+                    if (this.scene.HasStarringActor())
+                    {
+                        // There is at least one player that is a star, distribute bonuses
+                        DistributeBonuses();
+                    }
+                    WrapScene();
                 }
-
             }
             else
             {
                 // Failure
                 Console.WriteLine("\tFailure!");
-
                 role.Reward(false);
             }
         }
@@ -78,34 +80,6 @@ namespace Deadwood.Model.Rooms
             {
                 throw;
             }
-        }
-
-        public override List<Role> GetAllAvailableRoles()
-        {
-            List<Role> list = new List<Role>();
-            // TODO: get starring roles from scene
-
-            foreach(Role r in extraRoleDict.Values)
-            {
-                if (r.IsTaken() == false)
-                {
-                    list.Add(r);
-                }
-            }
-            return list;
-        }
-
-        public override List<Role> GetAllRoles()
-        {
-            List<Role> list = new List<Role>();
-            // TODO: get starring roles from scene
-
-            foreach (Role r in extraRoleDict.Values)
-            {
-                list.Add(r);
-            }
-
-            return list;
         }
 
         public override Role GetRole(string roleName)
@@ -133,13 +107,11 @@ namespace Deadwood.Model.Rooms
         public override void MoveInto()
         {
             base.MoveInto();
-            if(this.scene == null)
+            if(this.scene != null)
             {
-                // TODO: use better exception class
-                throw new IllegalRoomActionException("Set has no scene to flip");
+                // There is a scene, call move into for that scene
+                this.scene.OnMoveInto();
             }
-
-            this.scene.OnMoveInto();
         }
 
         // Assign the given scene to this Set and assign this Set to the given scene
@@ -200,5 +172,40 @@ namespace Deadwood.Model.Rooms
             // Filter out roles that are taken, then convert it to list
             return scene.starRoleDict.Values.Where(role => !role.IsTaken()).ToList();
         }
+
+        // Distributes bonuses to stars
+        private void DistributeBonuses()
+        {
+            Console.WriteLine("Bonuses!");
+            // TODO: Actually implement it
+        }
+
+        // Release all roles (stars and extra)
+        // Tell the board that it has wrapped a scene
+        private void WrapScene()
+        {
+            // TODO: Actually implemnt it
+
+            // Tell the scene to wrap the scene
+            this.scene.WrapScene();
+
+            // Free all taken extra roles
+            foreach(Role r in extraRoleDict.Values)
+            {
+                if (r.IsTaken())
+                {
+                    r.FreeRole();
+                }
+            }
+
+            // Tell the board that this set has wrapped its scene for a day
+            board.WrapScene();
+        }
+
+        public void FreeScene()
+        {
+            this.scene = null;
+        }
+
     }
 }

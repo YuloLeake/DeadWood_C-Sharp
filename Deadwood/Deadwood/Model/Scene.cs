@@ -43,5 +43,37 @@ namespace Deadwood.Model
         {
             this.set = set;
         }
+
+        // See if any players are acting as a star
+        public bool HasStarringActor()
+        {
+            foreach(Role r in starRoleDict.Values)
+            {
+                if (r.IsTaken())
+                {
+                    // There is a player who is acting as a star, return true
+                    return true;
+                }
+            }
+            // No players are acting as a star, return false
+            return false;
+        }
+
+        // Free all stars and the set it is attached to
+        public void WrapScene()
+        {
+            // Probably not necessary, but just in case
+            foreach(Role r in starRoleDict.Values)
+            {
+                if (r.IsTaken())
+                {
+                    r.FreeRole();
+                }
+            }
+            // Remove itself from the set
+            this.set.FreeScene();
+            this.set = null;
+        }
+
     }
 }

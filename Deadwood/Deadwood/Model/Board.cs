@@ -278,7 +278,12 @@ namespace Deadwood.Model
 
         private void StartOfDay()
         {
-            // Check if game over (0 scene cards)
+            // TODO: Check if game over (0 scene cards)
+
+            Console.WriteLine("A new Day has begun.");
+            Console.WriteLine("Everybody starts at the Trailers.");
+            Console.WriteLine("New Scenes has been set on each Set.");
+            Console.WriteLine("");
 
             // Put out a scene card to each set
             Scene scene = null;
@@ -291,7 +296,6 @@ namespace Deadwood.Model
 
             Console.WriteLine("Scenes left = {0:d}", sceneDeck.Count);
             Player.BrandNewDay(playerList);
-
         }
 
 
@@ -341,58 +345,6 @@ namespace Deadwood.Model
             int srcIdx = roomToIndexDict[src];
             int desIdx = roomToIndexDict[des];
             return roomAdjMat[srcIdx, desIdx];
-        }
-
-        // Return a list of all available roles in given room
-        public List<Role> GetAvailableRoles(string roomname)
-        {
-            // Check if roomname given is a valid roomname
-            try
-            {
-                ValidateRoom(roomname);
-            }
-            catch (KeyNotFoundException e)
-            {
-                throw;
-            }
-
-            List<Role> list = null;
-            try
-            {
-                list = roomNameToRoomDict[roomname].GetAllAvailableRoles();
-            }
-            catch (IllegalRoomActionException e)
-            {
-                throw;
-            }
-            return list;
-        }
-
-        // Return a list of all roles in given room, regardless of their availability
-        public List<Role> GetAllRoles(string roomname)
-        {
-            // Check if roomname given is a valid roomname
-            try
-            {
-                ValidateRoom(roomname);
-            }
-            catch (KeyNotFoundException e)
-            {
-                throw;
-            }
-
-            List<Role> list = null;
-            try
-            {
-                list = roomNameToRoomDict[roomname].GetAllRoles();
-            }
-            catch (IllegalRoomActionException e)
-            {
-                Console.WriteLine(e.msg);
-                // TODO: handle this better
-                list = new List<Role>();
-            }
-            return list;
         }
 
         // Return a list of all available starring roles in given room
@@ -564,6 +516,17 @@ namespace Deadwood.Model
             }
         }
         
+        // Called by Sets when a scene has wrapped
+        // Decrease the wrapups that is left and start a new day if there is 1 wrapup left
+        public void WrapScene()
+        {
+            wrapUpsLeft--;
+            if(wrapUpsLeft == 1)
+            {
+                // One scene left, start a new day
+                StartOfDay();
+            }
+        }
 
     }
 }

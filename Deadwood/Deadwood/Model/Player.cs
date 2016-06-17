@@ -75,14 +75,7 @@ namespace Deadwood.Model
             }
 
             // TODO: put this logic in state of the Player
-            try
-            {
-                this.room.Act(this.role);
-            }
-            catch
-            {
-                throw;
-            }
+            this.room.Act(this.role);
         }
 
         public void Rehearse()
@@ -94,14 +87,7 @@ namespace Deadwood.Model
             }
 
             // TODO: put this logic in state of the Player
-            try
-            {
-                this.room.Rehearse(this.role);
-            }
-            catch
-            {
-                throw;
-            }
+            this.room.Rehearse(this.role);
         }
 
         public void Move(string dst)
@@ -154,6 +140,12 @@ namespace Deadwood.Model
         {
             Console.WriteLine("Took the role \"{0}\"", role.name);
             this.role = role;
+        }
+
+        public void FreeRole()
+        {
+            Console.WriteLine("Freeing the role \"{0}\"", role.name);
+            this.role = null;
         }
 
         public void Upgrade()

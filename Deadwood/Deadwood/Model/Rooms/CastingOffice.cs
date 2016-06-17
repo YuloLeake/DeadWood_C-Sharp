@@ -42,16 +42,6 @@ namespace Deadwood.Model.Rooms
             throw new IllegalRoomActionException("\"Shh, please be quiet in the Casting Office.\"\n(You cannot rehearse in the Casting Office)");
         }
 
-        public override List<Role> GetAllAvailableRoles()
-        {
-            throw new IllegalRoomActionException("There are no roles in the Casting Office.");
-        }
-
-        public override List<Role> GetAllRoles()
-        {
-            throw new IllegalRoomActionException("There are no roles in the Casting Office.");
-        }
-
         public override Role GetRole(string roleName)
         {
             throw new IllegalRoomActionException("\"I am afraid I cannot let you do that\"\n(You cannot take up a role in the Casting Office)");
