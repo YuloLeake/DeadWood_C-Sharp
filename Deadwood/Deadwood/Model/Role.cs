@@ -38,15 +38,13 @@ namespace Deadwood.Model
          *  If the player can succeed with next dice role (i.e. rehearsePoint + 1 == budget), throw an exception
          */
         public void Rehearse(int budget)
-        {
-            // Check if reached limit
+        {   // Check if reached limit
             if(this.rehearsePoint + 1 < budget)     // add 1 since the miminum dice roll is 1
             {
                 this.rehearsePoint++;
             }
             else
-            {
-                // Will succeed with next dice roll, so throw an exception
+            {   // Will succeed with next dice roll, so throw an exception
                 throw new IllegalUserActionException("\"You have rehearsed enough. It's time for you to ACT!\""); 
             }
         }
@@ -54,15 +52,13 @@ namespace Deadwood.Model
         public void AssignPlayer(Player actor)
         {
             if(this.actor != null)
-            {
-                // somebody else is playing, throw exception
+            {   // somebody else is playing, throw exception
                 throw new IllegalUserActionException(string.Format("The role {0} is already being played by {1}.",
                                                                     this.name, this.actor.name));
             }
 
             if(this.rank > actor.rank)
-            {
-                // actor's rank is insufficient, throw an exception
+            {   // actor's rank is insufficient, throw an exception
                 throw new IllegalUserActionException(string.Format("\"Hey {0}! You can't handle the \"{1}\"!"+
                                                                    "(Your rank {2} is lower than the role's rank {3})", 
                                                                    actor.name, this.name, actor.rank, this.rank));
@@ -83,11 +79,17 @@ namespace Deadwood.Model
         public void Reward(bool success)
         {
             if(cbReward != null)
-            {
-                // Call the reward callback (implementation depends on this being a starring or extra role)
+            {   // Call the reward callback (implementation depends on this being a starring or extra role)
                 cbReward(success, this.actor);
             }
         }
+
+        // Give bonus to actor
+        public void Bonus(int bonus)
+        {
+            this.actor.ChangeMoney(bonus);
+        }
+
 
         public override string ToString()
         {

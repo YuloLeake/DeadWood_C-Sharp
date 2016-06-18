@@ -461,7 +461,7 @@ namespace Deadwood.Model.Factories
         {
             Role role = factory.CreateStarringRole(roleName);
             role.RegisterRewardCallback(OnStarringRoleRewards);
-            dict[roleName] = factory.CreateStarringRole(roleName);
+            dict[roleName] = role;
         }
 
         // If success, player gets 2 credits (nothing if otherwise)

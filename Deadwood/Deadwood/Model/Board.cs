@@ -298,6 +298,11 @@ namespace Deadwood.Model
             Player.BrandNewDay(playerList);
         }
 
+        // Rolling the die [1,6] and return the value
+        public int RollD6()
+        {
+            return this.rng.Next(1, 7);
+        }
 
         // Return list of roomnames that is adjacent to current player's room
         public List<Room> GetAdjacentRooms()

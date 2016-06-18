@@ -3,6 +3,8 @@
  *  Copyright (c) Yulo Leake 2016
  */
 
+ #define DEBUG
+
 using Deadwood.Model.Exceptions;
 
 using System;
@@ -34,33 +36,29 @@ namespace Deadwood.Model.Rooms
         {
             int budget = this.scene.budget;
             int bonus  = role.rehearsePoint;
-            int roll   = board.rng.Next(1, 7);  // Rolling the die [1,6], maybe change it to a function in Board class
+            int roll   = board.RollD6();
 
             // TODO: for now, take it out later
             Console.WriteLine("Rolled {0:d} ({1:d} + {2:d}) against {3:d}.", (roll+ bonus), roll, bonus, budget);
 
             // Evaluate player's roll
             if(roll + bonus >= budget)
-            {
-                // Success, decrease remaining shot count and give reward to player
+            {   // Success, decrease remaining shot count and give reward to player
                 Console.WriteLine("\tSuccess!");
                 role.Reward(true);
                 remainingShotCount--;
                 if(remainingShotCount == 0)
-                {
-                    // The Scene is wrap, distribute bonuses
+                {   // The Scene is wrap, distribute bonuses
                     Console.WriteLine("This is a wrap for \"{0}\"!", this.scene.name);
                     if (this.scene.HasStarringActor())
-                    {
-                        // There is at least one player that is a star, distribute bonuses
+                    {   // There is at least one player that is a star, distribute bonuses
                         DistributeBonuses();
                     }
                     WrapScene();
                 }
             }
             else
-            {
-                // Failure
+            {   // Failure
                 Console.WriteLine("\tFailure!");
                 role.Reward(false);
             }
@@ -83,8 +81,7 @@ namespace Deadwood.Model.Rooms
         }
 
         public override Role GetRole(string roleName)
-        {
-            // Check if role exists in star
+        {   // Check if role exists in star
             if(scene.starRoleDict.ContainsKey(roleName))
             {
                 return scene.starRoleDict[roleName];
@@ -92,8 +89,7 @@ namespace Deadwood.Model.Rooms
 
             // Check if role exists in extra
             if (extraRoleDict.ContainsKey(roleName) == false)
-            {
-                // Given role does not exist, throw error
+            {   // Given role does not exist, throw error
                 throw new IllegalUserActionException(string.Format("Given role name \"{0}\" does not exist in {1}", roleName, this.name));
             }
             return extraRoleDict[roleName];
@@ -108,8 +104,7 @@ namespace Deadwood.Model.Rooms
         {
             base.MoveInto();
             if(this.scene != null)
-            {
-                // There is a scene, call move into for that scene
+            {   // There is a scene, call move into for that scene
                 this.scene.OnMoveInto();
             }
         }
@@ -135,8 +130,7 @@ namespace Deadwood.Model.Rooms
         public override List<Role> GetAllExtraRoles()
         {
             if (this.scene == null)
-            {
-                // Scene is wrap, no list, throw error
+            {   // Scene is wrap, no list, throw error
                 throw new IllegalRoomActionException("Scene has wrapped, come back tomorrow.");
             }
             // Simply convert it to list
@@ -147,8 +141,7 @@ namespace Deadwood.Model.Rooms
         public override List<Role> GetAvailableExtraRoles()
         {
             if (this.scene == null)
-            {
-                // Scene is wrap, no list, throw error
+            {   // Scene is wrap, no list, throw error
                 throw new IllegalRoomActionException("Scene has wrapped, come back tomorrow.");
             }
             // Filter out roles that are taken, then convert it to list
@@ -159,8 +152,7 @@ namespace Deadwood.Model.Rooms
         public override List<Role> GetAllStarringRoles()
         {
             if(this.scene == null)
-            {
-                // Scene is wrap, no list, throw error
+            {   // Scene is wrap, no list, throw error
                 throw new IllegalRoomActionException("Scene has wrapped, come back tomorrow.");
             }
             // Simply convert it to list
@@ -171,26 +163,72 @@ namespace Deadwood.Model.Rooms
         public override List<Role> GetAvailableStarringRoles()
         {
             if (this.scene == null)
-            {
-                // Scene is wrap, no list, throw error
+            {   // Scene is wrap, no list, throw error
                 throw new IllegalRoomActionException("Scene has wrapped, come back tomorrow.");
             }
             // Filter out roles that are taken, then convert it to list
             return scene.starRoleDict.Values.Where(role => !role.IsTaken()).ToList();
         }
 
-        // Distributes bonuses to stars
+        // Distributes bonuses to actors
+        // Stars get an aggregate of rolled values
+        // Extras get amount equal to their rank
         private void DistributeBonuses()
-        {
-            Console.WriteLine("Bonuses!");
-            // TODO: Actually implement it
+        {   // Roll for bonuses for stars (number of rolls based on budget)
+            List<int> bonuses = new List<int>();
+            for (int i = 0; i < scene.budget; i++)
+            {
+                bonuses.Add(board.RollD6());
+            }
+            bonuses = bonuses.OrderByDescending(b => b).ToList();
+
+#if (DEBUG)
+            Console.WriteLine("Bonuses rolled and sorted (descending)");
+            foreach(int i in bonuses)
+            {
+                Console.WriteLine(i);
+            }
+#endif
+
+            // Aggregate bonuses and give bonuses to stars
+            List<Role> stars = scene.starRoleDict.Values.ToList();
+            stars.Reverse(); // reverse the roles (ascending to descending order based on rank)
+            int[] bonuses_ = new int[stars.Count];
+            for(int i = 0; i < bonuses.Count; i++)
+            {   // Aggregate
+                bonuses_[i % stars.Count] += bonuses[i];
+            }
+            for(int i = 0; i < stars.Count; i++)
+            {   // Distribute
+                if (stars[i].IsTaken())
+                {   // Make sure there is a player to give bonus to
+                    stars[i].Bonus(bonuses_[i]);
+                }
+            }
+
+#if (DEBUG)
+            Console.WriteLine("Aggregated bonuses");
+            foreach (int i in bonuses_)
+            {
+                Console.WriteLine(i);
+            }
+#endif
+
+            // Give bonuses to extras (amount = rank of the role)
+            foreach (Role r in extraRoleDict.Values)
+            {
+                if (r.IsTaken())
+                {   // Make sure there is a player to give bonus to
+                    r.Bonus(r.rank);
+                }
+            }
+
         }
 
         // Release all roles (stars and extra)
         // Tell the board that it has wrapped a scene
         private void WrapScene()
-        {
-            // Tell the scene to wrap the scene
+        {   // Tell the scene to wrap the scene
             this.scene.WrapScene();
 
             // Free all taken extra roles

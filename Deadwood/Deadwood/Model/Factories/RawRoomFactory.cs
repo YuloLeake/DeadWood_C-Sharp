@@ -50,8 +50,7 @@ namespace Deadwood.Model.Factories
             IRoleFactory factory = RawRoleFactory.mInstance;
             int shotCount = 0;
             switch (roomname)
-            {
-                // Build pre-defined rooms
+            {   // Build pre-defined rooms
                 case "Trailers":
                     room = Trailers.mInstance;
                     break;
@@ -156,8 +155,7 @@ namespace Deadwood.Model.Factories
         // If success, player gets 1 money and 1 credit
         // Otherwise, give 1 money
         void OnExtraRoleRewards(bool success, Player p)
-        {
-            // TODO: Maybe put this into Role Factory or separate class, since it'll be redundent when doing XML
+        {   // TODO: Maybe put this into Role Factory or separate class, since it'll be redundent when doing XML
             Console.WriteLine("Extra role reward for {0} and it was {1}", p.name, success);
             if (success)
             {
