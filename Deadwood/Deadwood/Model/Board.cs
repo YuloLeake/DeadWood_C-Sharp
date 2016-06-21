@@ -335,7 +335,7 @@ namespace Deadwood.Model
         }
 
         // Return true if src and dec are adjacent, false otherwise
-        public bool areRoomsAdjacent(string src, string des)
+        public bool AreRoomsAdjacent(string src, string des)
         {
             // Handle for non-existing room cases
             if(roomToIndexDict.ContainsKey(src) == false)
@@ -440,7 +440,7 @@ namespace Deadwood.Model
             }
         }
 
-        public Room getRoom(string roomname)
+        public Room GetRoom(string roomname)
         {
             if(roomNameToRoomDict.ContainsKey(roomname) == false)
             {
@@ -533,5 +533,30 @@ namespace Deadwood.Model
             }
         }
 
+        // Upgrade current player's rank using money
+        public void UpgradeMoney(int rank)
+        {
+            try
+            {
+                currentPlayer.Upgrade(CurrencyType.Money, rank);
+            }
+            catch(IllegalUserActionException e)
+            {
+                Console.WriteLine(e.msg);
+            }
+        }
+
+        // Upgrade current player's rank using credit
+        public void UpgradeCredit(int rank)
+        {
+            try
+            {
+                currentPlayer.Upgrade(CurrencyType.Credit, rank);
+            }
+            catch (IllegalUserActionException e)
+            {
+                Console.WriteLine(e.msg);
+            }
+        }
     }
 }

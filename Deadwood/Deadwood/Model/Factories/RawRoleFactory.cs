@@ -568,7 +568,7 @@ namespace Deadwood.Model.Factories
                     desc = "Ukk! (Ook)!";
                     rank = 5;
                     break;
-                case "Man with Gu":
+                case "Man with Gun":
                     desc = "Hold it right there!";
                     rank = 6;
                     break;

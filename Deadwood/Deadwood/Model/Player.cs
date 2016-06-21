@@ -3,6 +3,8 @@
  *  Copyright (c) Yulo Leake 2016
  */
 
+#define DEBUG
+
 using System;
 using System.Collections.Generic;
 
@@ -51,9 +53,15 @@ namespace Deadwood.Model
         public void ChangeMoney(int dm)
         {
             int temp = money + dm;
-            // TODO: Make sure player cannot go in debt
+            if(temp < 0)
+            {   // Make sure player does not go into debt
+                throw new IllegalUserActionException("You cannot spend more money than you have.");
+            }
 
             this.money = temp;
+#if (DEBUG)
+            Console.WriteLine("{0} got ${1:d} and now has ${2:d}", name, dm, money);
+#endif
         }
 
         // Change the credit this player has by given value
@@ -61,16 +69,30 @@ namespace Deadwood.Model
         public void ChangeCredit(int dc)
         {
             int temp = credit + dc;
-            // TODO: Make sure player cannot go in credit debt
+            if (temp < 0)
+            {   // Make sure player does not go into credit debt
+                throw new IllegalUserActionException("You cannot spend more credit than you have.");
+            }
 
             this.credit = temp;
+#if (DEBUG)
+            Console.WriteLine("{0} got {1:d}cr and now has {2:d}cr", name, dc, credit);
+#endif
+        }
+
+        public void RankUp(int rank)
+        {
+            if(this.rank >= rank)
+            {   // Throw error, since player is trying to rank down
+                throw new IllegalUserActionException("You cannot downgrade a player's rank!");
+            }
+            this.rank = rank;
         }
 
         public void Act()
         {
             if(this.role == null)
-            {
-                // TODO: incorporate this with one of the player stats
+            {   // TODO: incorporate this with one of the player stats
                 throw new IllegalUserActionException("You cannot act without playing a role");
             }
 
@@ -81,8 +103,7 @@ namespace Deadwood.Model
         public void Rehearse()
         {
             if (this.role == null)
-            {
-                // TODO: incorporate this with one of the player stats
+            {   // TODO: incorporate this with one of the player stats
                 throw new IllegalUserActionException("You cannot rehearse without playing a role");
             }
 
@@ -91,27 +112,24 @@ namespace Deadwood.Model
         }
 
         public void Move(string dst)
-        {
-            // TODO: put this in Moving State of the Player
+        {   // TODO: put this in Moving State of the Player
             Board b = Board.mInstance;
-            if(b.areRoomsAdjacent(room.name, dst) == false)
+            if(b.AreRoomsAdjacent(room.name, dst) == false)
             {
                 throw new IllegalUserActionException(string.Format("Error: \"{0}\" and \"{1}\" are not adjacent.\nYou cannot move to \"{1}\"", 
                                                                     room.name, dst));
             }
             // src and dst rooms are adjacent, move player to dst room
-            Room dstRoom = b.getRoom(dst);
+            Room dstRoom = b.GetRoom(dst);
             this.room = dstRoom;
             dstRoom.MoveInto();
         }
 
         public void TakeRole(string rolename)
-        {
-            // TODO: put this logic in the state of the Player
+        {   // TODO: put this logic in the state of the Player
             // Check if player is already playing a role
             if(this.role != null)
-            {
-                // Player is already playing a role, throw exception
+            {   // Player is already playing a role, throw exception
                 throw new IllegalUserActionException(string.Format("Error: User is already playing the role \"{0}\"", this.role.name));
             }
 
@@ -127,8 +145,8 @@ namespace Deadwood.Model
             }
 
             if(role == null)
-            {
-                //TODO: do something in this case (probably throw an exception)
+            {   //TODO: do something in this case (probably throw an exception)
+                Console.WriteLine("Error: unexpected, what? (Player::TakeRole())");
                 return;
             }
 
@@ -145,16 +163,16 @@ namespace Deadwood.Model
         public void FreeRole()
         {
             if(this.role != null)
-            {
-                // temp
+            {   // temp
                 Console.WriteLine("Freeing the role \"{0}\"", role.name);
+                this.role = null;
             }
-            this.role = null;
         }
 
-        public void Upgrade()
+        public void Upgrade(CurrencyType type, int rank)
         {
-
+            // TODO: Incorporate with player state
+            room.Upgrade(this, type, rank);
         }
            
         // static methods

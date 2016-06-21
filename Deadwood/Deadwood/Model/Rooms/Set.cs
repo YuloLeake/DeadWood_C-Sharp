@@ -95,7 +95,7 @@ namespace Deadwood.Model.Rooms
             return extraRoleDict[roleName];
         }
 
-        public override void Upgrade(Player p, int cr, int level)
+        public override void Upgrade(Player p, CurrencyType type, int rank)
         {
             throw new IllegalRoomActionException("\"Hey you! Take your fancy spreadsheet to the Casting Office!\"\n(You can only upgrade in the Casting Office, AKA not here.)");
         }

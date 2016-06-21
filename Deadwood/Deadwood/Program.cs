@@ -51,14 +51,15 @@ namespace Deadwood
             do
             {
                 input = Console.ReadLine();
-                processUserInput(game, input.ToLower());
+                ProcessInput(game, input.ToLower());
             }
             while (input != null && !game.IsGameOver());
             Console.WriteLine("Exiting Deadwood");
         }
 
-        static void processUserInput(Deadwood game, string cmd)
+        static void ProcessInput(Deadwood game, string cmd)
         {
+
             switch (cmd)
             {
                 case "who":
@@ -91,12 +92,16 @@ namespace Deadwood
                     game.Move();
                     break;
                 case "work":
-                    //Console.WriteLine("Input role name");
-                    //string role = Console.ReadLine().ToLower().Trim();
                     game.Work();
                     break;
-                case "upgrade":
-                    Console.WriteLine("");
+
+                case "upgrade c":
+                    // TODO: do a better parsing
+                    game.UpgradeCredits();
+                    break;
+                case "upgrade $":
+                    // TODO: do a better parsing
+                    game.UpgradeDollars();
                     break;
 
                 case "help":
@@ -129,8 +134,8 @@ namespace Deadwood
         public abstract void List();
         public abstract void ListAll();
         public abstract void PrintAdjacentsRooms();
-        public abstract void UpgradeDollars(int level);
-        public abstract void UpgradeCredits(int level);
+        public abstract void UpgradeDollars();
+        public abstract void UpgradeCredits();
 
         public void QuitGame()
         {
@@ -233,14 +238,14 @@ namespace Deadwood
             Console.WriteLine("              ---Rose Tremain");
         }
 
-        public override void UpgradeCredits(int level)
+        public override void UpgradeCredits()
         {
-            Console.WriteLine("Upgrade to {0} with credits\n", level);
+            Console.WriteLine("Upgrade using credits.");
         }
 
-        public override void UpgradeDollars(int level)
+        public override void UpgradeDollars()
         {
-            Console.WriteLine("Upgrade to {0} with dollars\n", level);
+            Console.WriteLine("Upgrade using money.");
         }
 
         public override void Where()
@@ -296,8 +301,7 @@ namespace Deadwood
         public override void List()
         {
             try
-            {
-                // Get both starring and extra roles
+            {   // Get both starring and extra roles
                 string roomname = board.currentPlayer.room.name;
                 List<Role> stars = board.GetAvailableStarringRoles(roomname);
                 List<Role> extras = board.GetAvailableExtraRoles(roomname);
@@ -317,8 +321,7 @@ namespace Deadwood
         public override void ListAll()
         {
             try
-            {
-                // Get both starring and extra roels
+            {   // Get both starring and extra roels
                 string roomname = board.currentPlayer.room.name;
                 List<Role> stars = board.GetAllStarringRoles(roomname);
                 List<Role> extras = board.GetAllExtraRoles(roomname);
@@ -396,16 +399,67 @@ namespace Deadwood
             board.Rehearse();
         }
 
-        public override void UpgradeCredits(int level)
+        public override void UpgradeCredits()
         {
-            throw new NotImplementedException();
+            CastingOffice office = CastingOffice.mInstance;
+            if(board.currentPlayer.room != office)
+            {   // Current player not in casting office, can't upgrade
+                // TODO: find better way to implement this, shouldn't be done this down in the logic
+                Console.WriteLine("You cannot upgrade unless you are at Casting Office");
+                return;
+            }
+
+            // List upgrade costs
+            int[] upgradeCost = CastingOffice.mInstance.UPGRADE_CREDIT;
+            Console.WriteLine("Upgrade to...:");
+            for(int i=0; i < upgradeCost.Length; i++)
+            {
+                Console.WriteLine("\tRank{0:d}: {1:d}cr", i+2, upgradeCost[i]);
+            }
+
+            // Get user input and upgrade
+            Console.Write("> Rank ");
+            try {
+                int rank = int.Parse(Console.ReadLine());
+                board.UpgradeCredit(rank);
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Error: Given rank is not an integer");
+            }
         }
 
-        public override void UpgradeDollars(int level)
+        public override void UpgradeDollars()
         {
-            throw new NotImplementedException();
+            CastingOffice office = CastingOffice.mInstance;
+            if (board.currentPlayer.room != office)
+            {   // Current player not in casting office, can't upgrade
+                // TODO: find better way to implement this, shouldn't be done this down in the logic
+                Console.WriteLine("You cannot upgrade unless you are at Casting Office");
+                return;
+            }
+
+            // List upgrade costs
+            int[] upgradeCost = CastingOffice.mInstance.UPGRADE_MONEY;
+            Console.WriteLine("Upgrade to...:");
+            for (int i = 0; i < upgradeCost.Length; i++)
+            {
+                Console.WriteLine("\tRank{0:d}: ${1:d}", i + 2, upgradeCost[i]);
+            }
+
+            // Get user input and upgrade
+            Console.Write("> Rank ");
+            try
+            {
+                int rank = int.Parse(Console.ReadLine());
+                board.UpgradeMoney(rank);
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Error: Given rank is not an integer");
+            }
         }
-        
+
         // Print where the current user is at
         public override void Where()
         {

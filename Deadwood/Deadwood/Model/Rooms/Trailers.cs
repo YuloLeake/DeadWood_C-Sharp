@@ -14,9 +14,7 @@ namespace Deadwood.Model.Rooms
     class Trailers : Room
     {
         // Singleton Constructor
-        private Trailers() : base("Trailers")
-        {
-        }
+        private Trailers() : base("Trailers") { }
 
         private static Trailers instance;
         public static Trailers mInstance
@@ -47,7 +45,7 @@ namespace Deadwood.Model.Rooms
             throw new IllegalRoomActionException("\"Are you looking for somebody?\"\n(You cannot take up a role in the Trailers)");
         }
 
-        public override void Upgrade(Player p, int cr, int level)
+        public override void Upgrade(Player p, CurrencyType type, int rank)
         {
             throw new IllegalRoomActionException("\"The Casting Office is on the other side of the map.\"\n(You can only upgrade in the Casting Office, AKA not in the Trailers)");
         }
