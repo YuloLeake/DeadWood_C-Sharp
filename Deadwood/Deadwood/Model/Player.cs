@@ -160,6 +160,11 @@ namespace Deadwood.Model
             this.role = role;
         }
 
+        public void SetRoom(Room room)
+        {
+            this.room = room;
+        }
+
         public void FreeRole()
         {
             if(this.role != null)

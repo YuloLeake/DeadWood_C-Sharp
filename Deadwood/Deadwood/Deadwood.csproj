@@ -54,6 +54,11 @@
     <Compile Include="Model\Factories\RawRoomFactory.cs" />
     <Compile Include="Model\Factories\RawSceneFactory.cs" />
     <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\PlayerStates\ActingState.cs" />
+    <Compile Include="Model\PlayerStates\IPlayerState.cs" />
+    <Compile Include="Model\PlayerStates\MovedState.cs" />
+    <Compile Include="Model\PlayerStates\MovingState.cs" />
+    <Compile Include="Model\PlayerStates\TerminalState.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="Model\Rooms\CastingOffice.cs" />
     <Compile Include="Model\Rooms\Room.cs" />

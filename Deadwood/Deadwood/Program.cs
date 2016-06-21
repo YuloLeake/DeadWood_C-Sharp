@@ -340,8 +340,7 @@ namespace Deadwood
 
         // Move user to another room
         public override void Move()
-        {
-            // Print all adjacent rooms
+        {   // Print all adjacent rooms
             List<Room> list = board.GetAdjacentRooms();
             Console.WriteLine("Move player to:");
             for(int i = 0; i < list.Count; i++)
@@ -358,11 +357,9 @@ namespace Deadwood
             int num = 0;
             bool isNumeric = int.TryParse(roomname, out num);
             if (isNumeric)
-            {
-                // numerical input, use position in list
+            {   // numerical input, use position in list
                 if(num == 0)
-                {
-                    // User wishes to cancel out of the move.
+                {   // User wishes to cancel out of the move.
                     return;
                 }
                 else if(num < 0 || num > list.Count)
@@ -497,8 +494,7 @@ namespace Deadwood
 
         // User take a role
         public override void Work()
-        {
-            // Get available roles (stars and extras) and list them
+        {   // Get available roles (stars and extras) and list them
             Player player = board.currentPlayer;
             string roomname = player.room.name;
             List<Role> stars;
@@ -509,8 +505,7 @@ namespace Deadwood
                 extras = board.GetAvailableExtraRoles(roomname);
             }
             catch (IllegalRoomActionException e)
-            {
-                // Empty roles, print error and return
+            {   // Empty roles, print error and return
                 Console.WriteLine(e.msg);
                 return;
             }
@@ -524,35 +519,30 @@ namespace Deadwood
             // Get user input for the part
             Console.Write("> ");
             string rolename = Console.ReadLine();
-            List<Role> roles = stars.Concat(extras).ToList();   // Small enough lists, so no need to use AddRange()
+            List<Role> roles = stars.Concat(extras).ToList();   // Small enough lists, so no need to optimize using AddRange()
 
             // see if an input is numerical
             int num = 0;
             bool isNumeric = int.TryParse(rolename, out num);
             if (isNumeric)
-            {
-                // numerical input, use position in list
+            {   // numerical input, use position in list
                 if (num == 0)
-                {
-                    // User wishes to cancel out of the move.
+                {   // User wishes to cancel out of the move.
                     rolename = "Cancel";
                 }
                 else if (num < 0 || num > roles.Count)
-                {
-                    // Out of bound, print Error 
+                {   // Out of bound, print Error 
                     Console.WriteLine("Error: Numeric input out of index (make sure it's between 1 and {0})", roles.Count);
                     return;
                 }
                 else
-                {
-                    // Get the actual rolename
+                {   // Get the actual rolename
                     rolename = roles[num - 1].name;
                 }
             }
 
             if (rolename.Equals("Cancel"))
-            {
-                // User wishes to cancel, print message and return
+            {   // User wishes to cancel, print message and return
                 Console.WriteLine("\tYou have canceled the selection");
                 return;
             }
