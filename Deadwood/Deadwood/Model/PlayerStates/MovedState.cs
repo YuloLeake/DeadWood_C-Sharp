@@ -42,12 +42,12 @@ namespace Deadwood.Model.PlayerStates
 
         public IPlayerState Act(Player p)
         {
-            throw new IllegalUserActionException("\"You seem exhausted, wait a bit, will ya?\"\n(You can only move once in a turn)");
+            throw new IllegalUserActionException("\"How can you have any act if you don't have yer role?\"\n(You cannot act without playing a role)");
         }
 
         public IPlayerState Move(Player p, string destination)
         {
-            throw new IllegalUserActionException("\"How can you have any act if you don't have yer role?\"\n(You cannot act without playing a role)");
+            throw new IllegalUserActionException("\"You seem exhausted, wait a bit, will ya?\"\n(You can only move once in a turn)");
         }
 
         public IPlayerState Rehearse(Player p)

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 
 using Deadwood.Model.Rooms;
 using Deadwood.Model.Exceptions;
+using Deadwood.Model.PlayerStates;
 
 namespace Deadwood.Model
 {
@@ -22,6 +23,7 @@ namespace Deadwood.Model
         public int rank { get; private set; }
         public Role role { get; private set; }
         public Room room { get; private set; }
+        private IPlayerState state;
 
         public static Player MakePrototype(int credit, int rank)
         {
@@ -47,6 +49,20 @@ namespace Deadwood.Model
         }
 
         // Public methods
+
+        // Method called at the start of this player's turn
+        public void StartOfTurn()
+        {
+            // Set up the state 
+            if(role == null)
+            {
+                this.state = new MovingState();
+            }
+            else
+            {
+                this.state = new ActingState();
+            }
+        }
 
         // Change the money this player has by given value
         // Throw an exception if it goes below 0
@@ -91,67 +107,62 @@ namespace Deadwood.Model
 
         public void Act()
         {
-            if(this.role == null)
-            {   // TODO: incorporate this with one of the player stats
-                throw new IllegalUserActionException("You cannot act without playing a role");
+            try
+            {
+                this.state = this.state.Act(this);
             }
-
-            // TODO: put this logic in state of the Player
-            this.room.Act(this.role);
+            catch (IllegalUserActionException)
+            {
+                throw;
+            }
         }
 
         public void Rehearse()
         {
-            if (this.role == null)
-            {   // TODO: incorporate this with one of the player stats
-                throw new IllegalUserActionException("You cannot rehearse without playing a role");
-            }
-
-            // TODO: put this logic in state of the Player
-            this.room.Rehearse(this.role);
-        }
-
-        public void Move(string dst)
-        {   // TODO: put this in Moving State of the Player
-            Board b = Board.mInstance;
-            if(b.AreRoomsAdjacent(room.name, dst) == false)
-            {
-                throw new IllegalUserActionException(string.Format("Error: \"{0}\" and \"{1}\" are not adjacent.\nYou cannot move to \"{1}\"", 
-                                                                    room.name, dst));
-            }
-            // src and dst rooms are adjacent, move player to dst room
-            Room dstRoom = b.GetRoom(dst);
-            this.room = dstRoom;
-            dstRoom.MoveInto();
-        }
-
-        public void TakeRole(string rolename)
-        {   // TODO: put this logic in the state of the Player
-            // Check if player is already playing a role
-            if(this.role != null)
-            {   // Player is already playing a role, throw exception
-                throw new IllegalUserActionException(string.Format("Error: User is already playing the role \"{0}\"", this.role.name));
-            }
-
-            // Get role from current room
-            Role role = null;
             try
             {
-                role = this.room.GetRole(rolename);
+                this.state = this.state.Rehearse(this);
             }
-            catch(IllegalUserActionException e)
+            catch (IllegalUserActionException)
             {
                 throw;
             }
+        }
 
-            if(role == null)
-            {   //TODO: do something in this case (probably throw an exception)
-                Console.WriteLine("Error: unexpected, what? (Player::TakeRole())");
-                return;
+        public void Move(string dst)
+        {
+            try
+            {
+                this.state = this.state.Move(this, dst);
             }
+            catch (IllegalUserActionException)
+            {
+                throw;
+            }
+        }
 
-            // Assign player to the role
-            role.AssignPlayer(this);
+        public void TakeRole(string rolename)
+        {
+            try
+            {
+                this.state = this.state.TakeRole(this, rolename);
+            }
+            catch (IllegalUserActionException)
+            {
+                throw;
+            }
+        }
+
+        public void Upgrade(CurrencyType type, int rank)
+        {
+            try
+            {
+                this.state = this.state.Upgrade(this, type, rank);
+            }
+            catch (IllegalUserActionException)
+            {
+                throw;
+            }
         }
 
         public void SetRole(Role role)
@@ -172,12 +183,6 @@ namespace Deadwood.Model
                 Console.WriteLine("Freeing the role \"{0}\"", role.name);
                 this.role = null;
             }
-        }
-
-        public void Upgrade(CurrencyType type, int rank)
-        {
-            // TODO: Incorporate with player state
-            room.Upgrade(this, type, rank);
         }
            
         // static methods

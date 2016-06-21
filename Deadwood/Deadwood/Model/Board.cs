@@ -248,6 +248,7 @@ namespace Deadwood.Model
             }
             currentPlayerIdx = 0; ;
             currentPlayer = playerList[currentPlayerIdx];
+            currentPlayer.StartOfTurn();
         }
 
         // Create the 40 scenes in the game
@@ -485,6 +486,7 @@ namespace Deadwood.Model
             currentPlayerIdx++;
             currentPlayerIdx %= playerCount;    // wrap it back
             currentPlayer = playerList[currentPlayerIdx];
+            currentPlayer.StartOfTurn();
         }
 
         // Make current player rehearse
