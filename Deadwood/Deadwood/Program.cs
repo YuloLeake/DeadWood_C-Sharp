@@ -104,6 +104,10 @@ namespace Deadwood
                     game.UpgradeDollars();
                     break;
 
+                case "score":
+                    game.Score();
+                    break;
+
                 case "help":
                     game.PrintHelp();
                     break;
@@ -136,6 +140,7 @@ namespace Deadwood
         public abstract void PrintAdjacentsRooms();
         public abstract void UpgradeDollars();
         public abstract void UpgradeCredits();
+        public abstract void Score();
 
         public void QuitGame()
         {
@@ -177,6 +182,8 @@ namespace Deadwood
             Console.WriteLine("\tadj           | Display a list of adjacent rooms.");
             Console.WriteLine("\tlist          | Display a list of available roles in current room.");
             Console.WriteLine("\tlistall       | Display a list of all roles in current room.");
+
+            Console.WriteLine("\tscore         | Display current score.");
 
             Console.WriteLine("\thelp          | Display available commands.");
             Console.WriteLine("\tquit          | Quit the game.");
@@ -266,6 +273,11 @@ namespace Deadwood
             Console.WriteLine("keeping together is progress;  ");
             Console.WriteLine("working together is success.   ");
             Console.WriteLine("                  ---Henry Ford");
+        }
+
+        public override void Score()
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -549,6 +561,11 @@ namespace Deadwood
 
             // Take the part
             board.TakeRole(rolename);
+        }
+
+        public override void Score()
+        {
+            board.DisplayScore();
         }
     }
 }

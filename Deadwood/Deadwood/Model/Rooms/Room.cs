@@ -27,6 +27,12 @@ namespace Deadwood.Model.Rooms
         public abstract List<Role> GetAvailableStarringRoles();
         public abstract void AssignScene(Scene scene);
         
+        // Triggered at the end of the day
+        public virtual void EndOfDay()
+        {
+
+        }
+        
         // Event triggered when a player moves into a room
         public virtual void MoveInto()
         {

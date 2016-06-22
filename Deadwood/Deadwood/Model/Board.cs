@@ -279,7 +279,13 @@ namespace Deadwood.Model
 
         private void StartOfDay()
         {
-            // TODO: Check if game over (0 scene cards)
+            if(setList.Count == 0)
+            {
+                // End of the game
+                Console.WriteLine("Game over!");
+                DisplayScore();
+                return;
+            }
 
             Console.WriteLine("A new Day has begun.");
             Console.WriteLine("Everybody starts at the Trailers.");
@@ -297,6 +303,19 @@ namespace Deadwood.Model
 
             Console.WriteLine("Scenes left = {0:d}", sceneDeck.Count);
             Player.BrandNewDay(playerList);
+        }
+
+        private void EndOfDay()
+        {
+            Console.WriteLine("The Day has ended.");
+            wrapUpsLeft = 0;
+            foreach (Room r in setList)
+            {
+                r.EndOfDay();
+            }
+
+            DisplayScore();
+            Console.WriteLine("");
         }
 
         // Rolling the die [1,6] and return the value
@@ -531,6 +550,8 @@ namespace Deadwood.Model
             if(wrapUpsLeft == 1)
             {
                 // One scene left, start a new day
+                EndTurn();
+                EndOfDay();
                 StartOfDay();
             }
         }
@@ -560,5 +581,15 @@ namespace Deadwood.Model
                 Console.WriteLine(e.msg);
             }
         }
+
+        public void DisplayScore()
+        {
+            Console.WriteLine("Current Score:");
+            for(int i = 0; i < playerList.Count; i++)
+            {
+                Console.WriteLine("\t{0:d}). " + playerList[i], i+1);
+            }
+        }
+
     }
 }

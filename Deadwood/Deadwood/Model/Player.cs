@@ -53,6 +53,8 @@ namespace Deadwood.Model
         // Method called at the start of this player's turn
         public void StartOfTurn()
         {
+            Console.WriteLine("{0}'s turn.", name);
+
             // Set up the state 
             if(role == null)
             {
@@ -184,7 +186,12 @@ namespace Deadwood.Model
                 this.role = null;
             }
         }
-           
+
+        public override string ToString()
+        {
+            return string.Format("{0}: Rank {1:d}, ${2:d}, {3:d}cr", name, rank, money, credit);
+        }
+
         // static methods
         public static void BrandNewDay(List<Player> players)
         {

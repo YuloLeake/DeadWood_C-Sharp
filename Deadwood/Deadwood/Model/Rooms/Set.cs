@@ -244,6 +244,12 @@ namespace Deadwood.Model.Rooms
             board.WrapScene();
         }
 
+        public override void EndOfDay()
+        {
+            base.EndOfDay();
+            FreeScene();
+        }
+
         public void FreeScene()
         {
             this.scene = null;
